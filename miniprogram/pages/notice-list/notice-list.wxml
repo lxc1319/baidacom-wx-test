@@ -1,0 +1,38 @@
+<!--pages/notice-list/notice-list.wxml-->
+<!-- 通知公告列表页 -->
+<view class="notice-list-page">
+  <!-- 公告列表 -->
+  <view class="notice-list">
+    <block wx:for="{{noticeList}}" wx:key="id">
+      <view class="notice-card">
+        <!-- 公告标题 -->
+        <view class="notice-title">{{item.title}}</view>
+        
+        <!-- 公告内容摘要 -->
+        <view class="notice-content" wx:if="{{item.contentAbstract}}">
+          <rich-text nodes="{{item.contentAbstract}}"></rich-text>
+        </view>
+        
+        <!-- 阅读详情按钮 -->
+        <view class="read-detail-btn" bindtap="onReadDetail" data-notice="{{item}}">
+          <text>阅读详情</text>
+        </view>
+      </view>
+    </block>
+    
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{noticeList.length === 0 && !loading}}">
+      <text>暂无通知公告</text>
+    </view>
+  </view>
+  
+  <!-- 底部提示 -->
+  <view class="no-more-tip" wx:if="{{!hasMore && noticeList.length > 0}}">
+    没有更多了
+  </view>
+  
+  <!-- 加载提示 -->
+  <view class="loading-tip" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+</view>

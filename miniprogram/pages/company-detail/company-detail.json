@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "公司详情",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "banner-swiper": "/components/banner-swiper/banner-swiper"
+  }
+}

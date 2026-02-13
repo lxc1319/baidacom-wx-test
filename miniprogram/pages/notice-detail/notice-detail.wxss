@@ -1,0 +1,102 @@
+/* pages/notice-detail/notice-detail.wxss */
+
+/* 通知公告详情页 */
+.notice-detail-page {
+  min-height: 100vh;
+  background-color: #f1f1f1;
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+
+/* 内容区域 */
+.content {
+  min-height: calc(100vh - 40rpx);
+  background-color: #ffffff;
+  border-radius: 10rpx;
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+
+/* 头部区域 */
+.header {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-bottom: 20rpx;
+}
+
+/* 公告标题 */
+.notice-title {
+  text-align: center;
+  font-size: 34rpx;
+  color: #000000;
+  font-weight: normal;
+  line-height: 1.4;
+  word-break: break-all;
+}
+
+/* 作者和时间信息 */
+.notice-meta {
+  margin-top: 20rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 32rpx;
+  color: #000000;
+}
+
+.meta-author,
+.meta-time {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.meta-author text,
+.meta-time text {
+  margin-left: 8rpx;
+}
+
+/* 分割线 */
+.divider {
+  width: 100%;
+  height: 1rpx;
+  background-color: #e5e5e5;
+  margin: 20rpx 0;
+}
+
+/* 公告内容 */
+.notice-content {
+  padding: 20rpx 0;
+  font-size: 30rpx;
+  color: #333333;
+  line-height: 1.6;
+  word-break: break-all;
+}
+
+/* rich-text 中的图片样式 */
+.notice-content rich-text img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 16rpx 0;
+}
+
+/* rich-text 中的段落样式 */
+.notice-content rich-text p {
+  margin: 16rpx 0;
+}
+
+/* 加载中状态 */
+.loading-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f1f1f1;
+}
+
+.loading-container text {
+  font-size: 28rpx;
+  color: #999999;
+}

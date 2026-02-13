@@ -1,0 +1,46 @@
+/* 空状态组件样式 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80rpx 32rpx;
+  min-height: 400rpx;
+}
+
+/* 图标 */
+.empty-icon {
+  margin-bottom: 24rpx;
+}
+
+.icon-text {
+  font-size: 120rpx;
+  opacity: 0.3;
+}
+
+/* 文字提示 */
+.empty-text {
+  font-size: 28rpx;
+  color: #999999;
+  line-height: 1.6;
+  text-align: center;
+  margin-bottom: 16rpx;
+}
+
+/* 描述文字 */
+.empty-desc {
+  font-size: 24rpx;
+  color: #CCCCCC;
+  line-height: 1.5;
+  text-align: center;
+  margin-bottom: 32rpx;
+}
+
+/* 操作按钮 */
+.empty-action {
+  padding: 16rpx 48rpx;
+  background-color: #FF6B00;
+  color: #FFFFFF;
+  font-size: 28rpx;
+  border-radius: 8rpx;
+}

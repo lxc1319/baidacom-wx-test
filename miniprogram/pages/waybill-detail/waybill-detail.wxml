@@ -1,0 +1,232 @@
+<!--pages/waybill-detail/waybill-detail.wxml-->
+<!-- 运单详情页 -->
+<view class="waybill-detail-page">
+  <!-- 标签页导航 - 左对齐 -->
+  <view class="tab-nav">
+    <view class="tab-item {{currentTab === 0 ? 'active' : ''}}" bindtap="onTabChange" data-index="0">
+      <text class="tab-text">电子存根</text>
+    </view>
+    <view class="tab-item {{currentTab === 1 ? 'active' : ''}}" bindtap="onTabChange" data-index="1">
+      <text class="tab-text">运输状态</text>
+    </view>
+  </view>
+
+  <!-- 标签页内容 -->
+  <view class="tab-content">
+    <!-- 电子存根标签页 -->
+    <view class="tab-panel" wx:if="{{currentTab === 0}}">
+      <view class="stub-content">
+        <!-- 条形码区域 -->
+        <view class="barcode-section">
+          <view class="barcode-wrapper">
+            <barcode code="{{waybillInfo.waybillCode}}" width="400" height="80" showTip="{{false}}" showCode="{{false}}"></barcode>
+          </view>
+          <view class="barcode-divider"></view>
+          <view class="barcode-right">
+            <text class="dest-text">目的地</text>
+            <text class="bill-text">{{waybillInfo.discDeptName || '--'}}</text>
+          </view>
+        </view>
+
+        <!-- 寄件方信息 -->
+        <view class="info-section">
+          <view class="section-label">寄件方：</view>
+          <view class="info-content">
+            <view class="info-row">
+              <view class="info-left">
+                <view class="icon-circle gray">发</view>
+                <text class="info-name">{{waybillInfo.sendName || '--'}}</text>
+              </view>
+              <view class="info-right">
+                <text class="info-phone">{{sendPhoneMasked || '--'}}</text>
+                <view class="eye-icon {{showSendPhone ? 'eye-close' : 'eye-open'}}" bindtap="onTogglePhone" data-type="send"></view>
+              </view>
+            </view>
+            <view class="info-address">{{waybillInfo.sendAddress || '--'}}</view>
+          </view>
+        </view>
+
+        <!-- 收件方信息 -->
+        <view class="info-section">
+          <view class="section-label">收件方：</view>
+          <view class="info-content">
+            <view class="info-row">
+              <view class="info-left">
+                <view class="icon-circle red">收</view>
+                <text class="info-name">{{waybillInfo.collectName || '--'}}</text>
+              </view>
+              <view class="info-right">
+                <text class="info-phone">{{collectPhoneMasked || '--'}}</text>
+                <view class="eye-icon {{showCollectPhone ? 'eye-close' : 'eye-open'}}" bindtap="onTogglePhone" data-type="collect"></view>
+              </view>
+            </view>
+            <view class="info-address">{{waybillInfo.collectAddress || '--'}}</view>
+          </view>
+        </view>
+
+        <!-- 托寄物表格 -->
+        <view class="info-table">
+          <view class="table-row">
+            <text class="table-cell label">托寄物</text>
+            <text class="table-cell label">包装/件数</text>
+            <text class="table-cell label">重量/体积</text>
+          </view>
+          <view class="table-row" wx:for="{{waybillInfo.goodsList || []}}" wx:key="index">
+            <text class="table-cell value">{{item.goodsName || '--'}}</text>
+            <text class="table-cell value">{{(item.packMethod !== null && item.packMethod !== undefined && item.packMethod !== '') || item.totalNum !== null && item.totalNum !== undefined ? ((item.packMethod !== null && item.packMethod !== undefined && item.packMethod !== '') ? item.packMethod : '--') + '/' + (item.totalNum !== null && item.totalNum !== undefined ? item.totalNum + '件' : '--') : '--'}}</text>
+            <text class="table-cell value">{{item.totalWeight !== null && item.totalWeight !== undefined || item.totalVolume !== null && item.totalVolume !== undefined ? (item.totalWeight !== null && item.totalWeight !== undefined ? item.totalWeight + '公斤' : '--') + '/' + (item.totalVolume !== null && item.totalVolume !== undefined ? item.totalVolume + '方' : '--') : '--'}}</text>
+          </view>
+          <view class="table-row" wx:if="{{!(waybillInfo.goodsList && waybillInfo.goodsList.length > 0)}}">
+            <text class="table-cell value">--</text>
+            <text class="table-cell value">--</text>
+            <text class="table-cell value">--</text>
+          </view>
+        </view>
+
+        <!-- 送货方式表格 -->
+        <view class="info-table">
+          <view class="table-row">
+            <text class="table-cell label">送货方式</text>
+            <text class="table-cell label">放货方式</text>
+            <text class="table-cell label">回单类型</text>
+          </view>
+          <view class="table-row">
+            <text class="table-cell value">{{deliveryMethodText || '--'}}</text>
+            <text class="table-cell value">{{releaseMethodText || '--'}}</text>
+            <text class="table-cell value">{{receiptTypeText || '--'}}</text>
+          </view>
+        </view>
+
+        <!-- 是否保价表格 -->
+        <view class="info-table two-col">
+          <view class="table-row">
+            <text class="table-cell label">是否保价</text>
+            <text class="table-cell label">是否代收货款</text>
+          </view>
+          <view class="table-row">
+            <text class="table-cell value">{{insuredText || '--'}}</text>
+            <text class="table-cell value">{{collectionText || '--'}}</text>
+          </view>
+        </view>
+
+        <!-- 底部信息 -->
+        <view class="bottom-info">
+          <view class="bottom-row">
+            <text class="bottom-label">备注：</text>
+            <text class="bottom-value">{{waybillInfo.remark || ''}}</text>
+          </view>
+          <view class="bottom-row">
+            <text class="bottom-label">寄件时间：</text>
+            <text class="bottom-value">{{createTimeFormatted || '--'}}</text>
+          </view>
+          <view class="bottom-row">
+            <text class="bottom-label">揽收网点：</text>
+            <text class="bottom-value">{{waybillInfo.billDeptName || '--'}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 运输状态标签页 -->
+    <view class="tab-panel" wx:if="{{currentTab === 1}}">
+      <view class="status-content">
+        <!-- 当前状态头部 -->
+        <view class="status-header">
+          <view class="status-left">
+            <!-- 节点名称：根据nodeType判断 -->
+            <view class="status-title" wx:if="{{trackList.length > 0}}">
+              <text>{{(trackList[0].nodeType === null || trackList[0].nodeType === undefined || trackList[0].nodeType === '') ? '已开单' : trackList[0].nodeName}}</text>
+            </view>
+            <view class="status-title" wx:else>
+              <text>已开单</text>
+            </view>
+            <view class="status-title-divider"></view>
+            <view class="status-time-row">
+              <!-- 时间标题根据nodeType变化，无数据时默认显示开单时间 -->
+              <text class="status-label" wx:if="{{trackList.length === 0 || trackList[0].nodeType === null || trackList[0].nodeType === undefined || trackList[0].nodeType === ''}}">开单时间：</text>
+              <text class="status-label" wx:elif="{{trackList[0].nodeType === 'collect'}}">揽收时间：</text>
+              <text class="status-label" wx:elif="{{trackList[0].nodeType === 'transit'}}">运送时间：</text>
+              <text class="status-label" wx:else>运送时间：</text>
+              <!-- 时间值：nodeTime为空显示空值，有值显示时间 -->
+              <text class="status-value" wx:if="{{trackList.length > 0}}">{{trackList[0].nodeTime ? trackList[0].nodeTimeFormattedShort : ''}}</text>
+              <text class="status-value" wx:else></text>
+            </view>
+          </view>
+          <view class="status-divider-v"></view>
+          <view class="status-center">
+            <text class="from-address">{{waybillInfo.billDeptName || '--'}}</text>
+          </view>
+          <view class="status-arrow">
+            <view class="arrow-circle">
+              <text class="arrow-text">→</text>
+            </view>
+          </view>
+          <view class="status-right">
+            <text class="to-address">{{waybillInfo.discDeptName || '--'}}</text>
+          </view>
+        </view>
+        <!-- 物流轨迹列表 -->
+        <view class="track-section">
+          <view class="track-list" wx:if="{{trackList.length > 0}}">
+            <view class="track-item {{index === 0 ? 'active' : ''}} {{item.showTitle ? 'show-title' : 'no-title'}}" wx:for="{{trackList}}" wx:key="index">
+              <view class="track-left">
+                <!-- 图标逻辑：
+                     1. showTitle=true：显示大图标（45rpx）
+                     2. showTitle=false：显示小圆点
+                     3. 第一条数据(index===0)：红色图标
+                     4. 其他数据：灰色图标
+                -->
+                <view class="track-icon-wrap {{index === 0 ? 'active' : 'received'}} {{item.showTitle ? 'icon-large' : 'icon-small'}}">
+                  <view class="track-icon-inner">
+                    <!-- showTitle=true时显示大图标 -->
+                    <block wx:if="{{item.showTitle}}">
+                      <!-- 签收：收字 -->
+                      <text class="icon-sign" wx:if="{{item.nodeType === 'sign'}}">收</text>
+                      <!-- 运送中/派送中：🚚 -->
+                      <text class="icon-truck" wx:elif="{{item.nodeType === 'transit' || item.nodeType === 'delivery'}}">🚚</text>
+                      <!-- 揽收或其他：📦 -->
+                      <text class="icon-received" wx:else>📦</text>
+                    </block>
+                    <!-- showTitle=false时显示小圆点 -->
+                    <view class="icon-dot-small" wx:else></view>
+                  </view>
+                </view>
+                <view class="track-line" wx:if="{{index < trackList.length - 1}}"></view>
+              </view>
+              <view class="track-right">
+                <!-- 节点名称（仅当showTitle为true时显示） -->
+                <view class="track-status-wrap" wx:if="{{item.showTitle && item.nodeName}}">
+                  <text class="track-status">{{item.nodeName}}</text>
+                </view>
+                <!-- 时间和内容 -->
+                <view class="track-content">
+                  <!-- 时间 -->
+                  <view class="track-time-row" wx:if="{{item.nodeTime}}">
+                    <text class="track-time">{{item.nodeTimeFormatted || item.nodeTime}}</text>
+                  </view>
+                  <!-- 内容：根据contentList渲染，手机号显示为蓝色并可点击 -->
+                  <view class="track-detail" wx:if="{{item.contentList && item.contentList.length > 0}}">
+                    <block wx:for="{{item.contentList}}" wx:for-item="contentItem" wx:key="index">
+                      <text class="content-text {{contentItem.type === 'phone' ? 'phone-blue' : ''}} {{index === 0 ? '' : 'content-text-gray'}}" bindtap="{{contentItem.type === 'phone' ? 'onMakePhoneCall' : ''}}" data-phone="{{contentItem.value}}">{{contentItem.value}}</text>
+                    </block>
+                  </view>
+                  <!-- 兼容旧格式：【部门 手机号】事件内容 -->
+                  <view class="track-detail" wx:elif="{{item.deptName || item.userName || item.nodeContent}}">
+                    <text class="content-text {{index === 0 ? '' : 'content-text-gray'}}" wx:if="{{item.deptName || item.userName}}">【{{item.deptName || ''}} </text>
+                    <text class="content-text phone-blue {{index === 0 ? '' : 'content-text-gray'}}" wx:if="{{item.userName}}" bindtap="onMakePhoneCall" data-phone="{{item.userName}}">{{item.userName}}</text>
+                    <text class="content-text {{index === 0 ? '' : 'content-text-gray'}}" wx:if="{{item.deptName || item.userName}}">】</text>
+                    <text class="content-text {{index === 0 ? '' : 'content-text-gray'}}" wx:if="{{item.nodeContent}}">{{item.nodeContent}}</text>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <!-- 空状态 -->
+          <view class="empty-state" wx:if="{{trackList.length === 0}}">
+            <text>暂无数据</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

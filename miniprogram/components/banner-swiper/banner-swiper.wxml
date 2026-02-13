@@ -1,0 +1,41 @@
+<!-- 轮播图组件 -->
+<view class="banner-swiper">
+  <swiper
+    class="swiper-container"
+    indicator-dots="{{indicatorType === 'dots'}}"
+    indicator-color="rgba(255, 255, 255, 0.5)"
+    indicator-active-color="#ffffff"
+    autoplay="{{autoplay}}"
+    interval="{{interval}}"
+    duration="{{duration}}"
+    circular="{{circular}}"
+    bindchange="onSwiperChange"
+  >
+    <block wx:for="{{processedBanners.length > 0 ? processedBanners : banners}}" wx:key="id">
+      <swiper-item>
+        <image
+          class="banner-image"
+          src="{{item.picUrl || item.imageUrl}}"
+          mode="scaleToFill"
+          catchtap="onBannerClick"
+          data-banner="{{item}}"
+          binderror="onImageError"
+        />
+      </swiper-item>
+    </block>
+  </swiper>
+
+  <!-- 长条形自定义指示器 -->
+  <view class="custom-indicator-bar" wx:if="{{indicatorType === 'bar' && banners && banners.length > 0}}">
+    <view
+      wx:for="{{banners}}"
+      wx:key="id"
+      class="indicator-bar-item {{currentIndex === index ? 'active' : ''}}"
+    ></view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="banner-empty" wx:if="{{!banners || banners.length === 0}}">
+    <text>暂无轮播图</text>
+  </view>
+</view>

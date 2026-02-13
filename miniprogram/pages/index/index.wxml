@@ -1,0 +1,203 @@
+<!--index.wxml - 首页-->
+<view class="index-page">
+  <!-- 骨架屏 -->
+  <skeleton loading="{{skeletonLoading}}" />
+
+  <!-- 实际内容 -->
+  <view wx:if="{{!skeletonLoading}}">
+    <!-- 1. 顶部Banner区域 -->
+    <view class="banner-section">
+      <banner-swiper banners="{{banners}}" bind:bannerClick="onBannerClick" />
+    </view>
+
+    <!-- 2. 查询输入区域 -->
+    <view class="search-section">
+      <view class="search-box">
+        <!-- 扫描图标 -->
+        <view class="scan-icon" bindtap="onScanCode">
+          <view class="qr-code-icon">
+            <view class="corner corner-tl"></view>
+            <view class="corner corner-tr"></view>
+            <view class="corner corner-bl"></view>
+            <view class="corner corner-br"></view>
+          </view>
+        </view>
+        <!-- 输入框 -->
+        <input
+          class="search-input"
+          type="text"
+          placeholder="请输入运单号"
+          value="{{waybillCode}}"
+          bindinput="onWaybillInput"
+        />
+        <!-- 清除按钮 -->
+        <view class="clear-icon" wx:if="{{waybillCode}}" bindtap="onClearInput">
+          <view class="clear-icon-inner">
+            <text class="icon-clear">×</text>
+          </view>
+        </view>
+        <!-- 查询按钮 -->
+        <view wx:if="{{isLoggedIn}}" class="search-btn" bindtap="onSearch">查询</view>
+        <view wx:else class="search-btn" bindtap="onSearchWithLogin">查询</view>
+      </view>
+    </view>
+
+    <!-- 3. 标签页切换 -->
+    <view class="tabs-section">
+      <view class="tabs">
+        <view
+          class="tab-item {{currentTab === 0 ? 'active' : ''}}"
+          bindtap="onTabChange"
+          data-index="0"
+        >
+          最近查询
+        </view>
+        <view
+          class="tab-item {{currentTab === 1 ? 'active' : ''}}"
+          bindtap="onTabChange"
+          data-index="1"
+        >
+          寄件订单
+        </view>
+        <view
+          class="tab-item {{currentTab === 2 ? 'active' : ''}}"
+          bindtap="onTabChange"
+          data-index="2"
+        >
+          收件订单
+        </view>
+      </view>
+    </view>
+
+    <!-- 4. 运单列表区域 -->
+    <view class="waybill-list-section">
+      <scroll-view
+        class="waybill-scroll"
+        scroll-y
+        bindscrolltolower="onLoadMore"
+        refresher-enabled="{{true}}"
+        refresher-triggered="{{refreshing}}"
+        bindrefresherrefresh="onRefresh"
+      >
+        <view class="waybill-list-content">
+          <!-- 运单列表 -->
+          <block wx:if="{{waybillList.length > 0}}">
+            <view class="waybill-simple-item" wx:for="{{waybillList}}" wx:key="id" bindtap="onWaybillClick" data-item="{{item}}">
+            <text class="waybill-name">{{item.collectName || '未知'}}</text>
+            <text class="waybill-address">{{item.collectAddress || ''}}</text>
+            <text class="waybill-date">{{item.formatDate || ''}}</text>
+            <view class="waybill-star" catchtap="onFavoriteClick" data-id="{{item.id}}" data-waybillcode="{{item.waybillCode}}" data-companyid="{{item.companyId}}" data-subscribeflag="{{item.subscribeFlag}}">
+              <view class="star-icon {{item.subscribeFlag === true ? 'active' : ''}}">
+                <view class="star-outer">
+                  <view class="star-inner"></view>
+                </view>
+              </view>
+            </view>
+          </view>
+          </block>
+
+          <!-- 空状态 -->
+          <view class="empty-state" wx:if="{{waybillList.length === 0 && !loading}}">
+            <text class="empty-text">暂无数据</text>
+          </view>
+
+          <!-- 加载状态 -->
+          <view class="loading-more" wx:if="{{loading}}">
+            <text>加载中...</text>
+          </view>
+
+
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- 5. 快捷功能区 -->
+    <view class="quick-actions-section">
+      <view class="quick-action-item" bindtap="onRouteQuery">
+        <view class="quick-action-icon route-icon">
+          <image src="https://dachisc.wang:9000/wljh-sanqian/d9cc306022ff0aa90a50bbd645dbfdf2e44068ebb5f04871f09a7742ff2ecfce.png" mode="aspectFit" class="action-icon-img"/>
+        </view>
+        <text class="quick-action-text">查优质物流线路</text>
+      </view>
+      <view class="quick-action-item" bindtap="onQuickOrder">
+        <view class="quick-action-icon order-icon">
+          <image src="https://dachisc.wang:9000/wljh-sanqian/442d24f655b71efd4e76c8d4a7c3d70ed8eeb388ffb7dbb8146dfd2a4cf43a8c.jpg" mode="aspectFit" class="action-icon-img"/>
+        </view>
+        <text class="quick-action-text">网点快捷下单</text>
+      </view>
+    </view>
+
+    <!-- 6. 消息通告栏 -->
+    <view class="notice-section" wx:if="{{notices.length > 0}}" bindtap="onNoticeClick">
+      <view class="notice-content">
+        <view class="notice-icon">
+          <text class="icon-notice">📢</text>
+        </view>
+        <swiper class="notice-swiper" vertical autoplay circular interval="3000">
+          <swiper-item wx:for="{{notices}}" wx:key="id" class="notice-item">
+            <text class="notice-text">{{item.title}}</text>
+          </swiper-item>
+        </swiper>
+        <view class="notice-arrow">
+          <text class="icon-arrow">></text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 7. 底部广告区域（保持不变） -->
+    <view class="ad-section" wx:if="{{adList.length > 0}}">
+      <view class="ad-list">
+        <view
+          wx:for="{{adList}}"
+          wx:key="id"
+          class="ad-item {{index < 5 ? 'ad-item-full' : 'ad-item-half'}}"
+          bindtap="onAdClick"
+          data-item="{{item}}"
+        >
+          <image
+            class="ad-image"
+            src="{{item.adUrl}}"
+            mode="aspectFill"
+            lazy-load
+          />
+        </view>
+      </view>
+    </view>
+</view>
+
+  <!-- 查询结果弹窗 -->
+  <waybill-result-modal
+    visible="{{showResultModal}}"
+    results="{{searchResults}}"
+    bind:close="onCloseResultModal"
+    bind:viewdetail="onViewDetail"
+  />
+
+  <!-- 登录弹窗 - 放在最外层，不受骨架屏影响 -->
+   <view class="login-modal" wx:if="{{showLoginModal}}">
+     <view class="login-modal-mask" bindtap="onCloseLoginModal"></view>
+     <view class="login-modal-content">
+       <view class="login-modal-title">{{showPhoneAuth ? '手机号授权' : '登录确认'}}</view>
+       <view class="login-modal-desc">{{showPhoneAuth ? '需要授权手机号完成注册' : '查询运单需要登录'}}</view>
+
+       <view class="login-modal-buttons">
+         <button class="login-modal-btn cancel" bindtap="onCloseLoginModal">取消</button>
+         
+         <!-- 未获取手机号时显示普通登录按钮 -->
+         <button 
+           wx:if="{{!showPhoneAuth}}"
+           class="login-modal-btn confirm" 
+           bindtap="onConfirmLogin"
+         >一键登录</button>
+         
+         <!-- 需要手机号时显示获取手机号按钮 -->
+         <button 
+           wx:if="{{showPhoneAuth}}"
+           class="login-modal-btn confirm" 
+           open-type="getPhoneNumber" 
+           bindgetphonenumber="onGetPhoneNumber"
+         >授权手机号</button>
+       </view>
+     </view>
+   </view>
+</view>

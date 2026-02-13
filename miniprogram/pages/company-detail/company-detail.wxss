@@ -1,0 +1,733 @@
+/* 物流公司详情页样式 */
+
+.company-detail-page {
+  min-height: 100vh;
+  background-color: #F5F5F5;
+  padding-bottom: 32rpx;
+}
+
+/* ==================== 轮播图区域 ==================== */
+.banner-section {
+  width: 100%;
+  height: 400rpx;
+  margin-bottom: 16rpx;
+}
+
+/* ==================== 消息通告栏 ==================== */
+.notice-section {
+  padding: 0 32rpx;
+  margin-bottom: 16rpx;
+}
+
+.notice-content {
+  display: flex;
+  align-items: center;
+  background-color: #FFFFFF;
+  border-radius: 12rpx;
+  padding: 20rpx 24rpx;
+}
+
+.notice-icon {
+  width: 40rpx;
+  height: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16rpx;
+}
+
+.icon-notice {
+  font-size: 32rpx;
+}
+
+.notice-swiper {
+  flex: 1;
+  height: 40rpx;
+}
+
+.notice-swiper.no-data {
+  display: flex;
+  align-items: center;
+  height: 40rpx;
+}
+
+.notice-swiper.no-data .notice-text {
+  color: #999999;
+}
+
+.notice-item {
+  display: flex;
+  align-items: center;
+  height: 40rpx;
+}
+
+.notice-text {
+  font-size: 28rpx;
+  color: #666666;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.notice-arrow {
+  width: 40rpx;
+  height: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-arrow {
+  font-size: 28rpx;
+  color: #999999;
+}
+
+/* ==================== 运单查询区域 ==================== */
+.search-section {
+  padding: 0 32rpx;
+  margin-bottom: 16rpx;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  height: 88rpx;
+  background-color: #FFFFFF;
+  border-radius: 12rpx;
+  padding: 0 24rpx;
+}
+
+.scan-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 扫码图标样式 - 四角方框 */
+.qr-code-icon {
+  width: 32rpx;
+  height: 32rpx;
+  position: relative;
+}
+
+.corner {
+  position: absolute;
+  width: 10rpx;
+  height: 10rpx;
+  border-color: #666666;
+  border-style: solid;
+}
+
+.corner-tl {
+  top: 0;
+  left: 0;
+  border-width: 4rpx 0 0 4rpx;
+}
+
+.corner-tr {
+  top: 0;
+  right: 0;
+  border-width: 4rpx 4rpx 0 0;
+}
+
+.corner-bl {
+  bottom: 0;
+  left: 0;
+  border-width: 0 0 4rpx 4rpx;
+}
+
+.corner-br {
+  bottom: 0;
+  right: 0;
+  border-width: 0 4rpx 4rpx 0;
+}
+
+.search-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333333;
+}
+
+.clear-icon {
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8rpx;
+}
+
+.clear-icon-inner {
+  width: 32rpx;
+  height: 32rpx;
+  background-color: #CCCCCC;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-clear {
+  font-size: 24rpx;
+  color: #FFFFFF;
+  line-height: 1;
+}
+
+.search-btn {
+  padding: 0 32rpx;
+  height: 56rpx;
+  line-height: 56rpx;
+  background: linear-gradient(135deg, #FFE066 0%, #FFD700 100%);
+  color: #333333;
+  font-size: 28rpx;
+  font-weight: 500;
+  border-radius: 28rpx;
+  text-align: center;
+  margin-left: 16rpx;
+}
+
+/* ==================== 标签页导航和内容区域（整体） ==================== */
+.tab-section {
+  margin: 0 32rpx;
+  background-color: #FFFFFF;
+  border-radius: 12rpx;
+  overflow: hidden;
+}
+
+/* 标签页导航 */
+.tab-nav {
+  display: flex;
+  justify-content: space-around;
+  background-color: #FFFFFF;
+  border-bottom: 1rpx solid #EEEEEE;
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 24rpx 0 20rpx;
+  font-size: 28rpx;
+  color: #666666;
+  position: relative;
+}
+
+.tab-item.active {
+  color: #333333;
+  font-weight: bold;
+}
+
+.tab-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 4rpx;
+  background-color: #FF6B6B;
+  border-radius: 2rpx;
+}
+
+/* 标签页内容区域 */
+.tab-content {
+  padding: 24rpx;
+  background-color: #FFFFFF;
+}
+
+/* ==================== 品牌简介标签页 ==================== */
+.brand-intro-tab {
+  min-height: 400rpx;
+}
+
+.company-desc {
+  font-size: 28rpx;
+  color: #666666;
+  line-height: 1.8;
+  text-align: justify;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400rpx;
+  font-size: 28rpx;
+  color: #999999;
+}
+
+/* ==================== 网点查询标签页 ==================== */
+.branch-query-tab {
+  min-height: 400rpx;
+}
+
+.search-box-wrapper {
+  position: relative;
+  margin-bottom: 32rpx;
+}
+
+.search-input-branch {
+  width: 100%;
+  height: 72rpx;
+  padding: 0 100rpx 0 32rpx;
+  background-color: #F5F5F5;
+  border-radius: 36rpx;
+  font-size: 28rpx;
+  color: #333333;
+  box-sizing: border-box;
+}
+
+.clear-btn-circle {
+  position: absolute;
+  right: 32rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40rpx;
+  height: 40rpx;
+  background-color: #CCCCCC;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clear-icon-text {
+  font-size: 28rpx;
+  color: #FFFFFF;
+  line-height: 1;
+}
+
+.branch-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.branch-item {
+  background-color: #F5F5F5;
+  border-radius: 12rpx;
+  padding: 24rpx;
+}
+
+.branch-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16rpx;
+  position: relative;
+}
+
+.branch-row:last-child {
+  margin-bottom: 0;
+}
+
+.branch-label {
+  font-size: 28rpx;
+  color: #666666;
+  min-width: 160rpx;
+}
+
+.branch-value {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333333;
+  line-height: 1.6;
+}
+
+.branch-icon {
+  font-size: 40rpx;
+  margin-left: 16rpx;
+}
+
+/* ==================== 线路查询标签页 ==================== */
+.route-query-tab {
+  min-height: 400rpx;
+}
+
+.search-section-route {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32rpx;
+  padding: 0 8rpx;
+}
+
+.search-box-route {
+  flex: 1;
+  position: relative;
+}
+
+.search-input-route {
+  width: 100%;
+  height: 72rpx;
+  padding: 0 60rpx 0 24rpx;
+  background-color: #F5F5F5;
+  border-radius: 36rpx;
+  font-size: 28rpx;
+  color: #333333;
+  box-sizing: border-box;
+}
+
+.clear-btn-route {
+  position: absolute;
+  right: 16rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36rpx;
+  height: 36rpx;
+  background-color: #CCCCCC;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.clear-icon-route {
+  font-size: 24rpx;
+  color: #FFFFFF;
+  line-height: 1;
+}
+
+.arrow-icon-wrapper {
+  width: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrow-icon {
+  font-size: 36rpx;
+  color: #666666;
+}
+
+.city-dropdown {
+  position: absolute;
+  top: 80rpx;
+  left: 0;
+  right: 0;
+  max-height: 400rpx;
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.city-item {
+  padding: 24rpx 32rpx;
+  font-size: 28rpx;
+  color: #333333;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+
+.city-item:last-child {
+  border-bottom: none;
+}
+
+.city-item:active {
+  background-color: #F5F5F5;
+}
+
+.arrow-icon {
+  font-size: 32rpx;
+  color: #666666;
+  font-weight: bold;
+}
+
+.route-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+  padding: 0 8rpx;
+}
+
+.route-item {
+  background-color: #F5F5F5;
+  border-radius: 12rpx;
+  padding: 24rpx;
+}
+
+.route-row {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 16rpx;
+  min-height: 40rpx;
+}
+
+.route-row:last-child {
+  margin-bottom: 0;
+}
+
+.route-header-row {
+  align-items: center;
+}
+
+.route-label {
+  font-size: 28rpx;
+  color: #666666;
+  min-width: 140rpx;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.route-value {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333333;
+  line-height: 1.6;
+}
+
+.route-name {
+  font-weight: bold;
+  color: #333333;
+}
+
+.route-info-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.route-info-main {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+}
+
+.route-branch-name {
+  font-size: 28rpx;
+  color: #333333;
+  font-weight: 500;
+}
+
+.route-branch-phone {
+  font-size: 28rpx;
+  color: #333333;
+}
+
+.route-info-address {
+  font-size: 26rpx;
+  color: #666666;
+  line-height: 1.4;
+}
+
+.route-action-icon {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.phone-icon {
+  font-size: 36rpx;
+}
+
+.route-price {
+  font-size: 32rpx;
+  color: #FF0000;
+  font-weight: bold;
+}
+
+.route-divider {
+  height: 1rpx;
+  background-color: #DDDDDD;
+  margin: 16rpx -24rpx;
+}
+
+/* ==================== 消息通知标签页 ==================== */
+.message-tab {
+  min-height: 400rpx;
+}
+
+.message-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.message-card {
+  background-color: #F5F5F5;
+  border-radius: 12rpx;
+  padding: 24rpx;
+}
+
+.message-title {
+  font-size: 28rpx;
+  color: #333333;
+  font-weight: 500;
+  margin-bottom: 16rpx;
+  line-height: 1.6;
+}
+
+.message-content {
+  font-size: 26rpx;
+  color: #666666;
+  line-height: 1.8;
+  margin-bottom: 16rpx;
+}
+
+.read-detail-btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 26rpx;
+  color: #d81e06;
+}
+
+.no-more-tip {
+  text-align: center;
+  padding: 32rpx;
+  font-size: 26rpx;
+  color: #999999;
+}
+
+/* ==================== 联系我们标签页 ==================== */
+.contact-tab {
+  min-height: 400rpx;
+  padding: 0 8rpx;
+}
+
+.contact-card {
+  background-color: #FFFFFF;
+  border-radius: 12rpx;
+  padding: 16rpx 0;
+  margin-bottom: 24rpx;
+}
+
+.contact-card-sub {
+  margin-top: 24rpx;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 20rpx;
+  min-height: 80rpx;
+}
+
+.contact-label-fixed {
+  font-size: 28rpx;
+  color: #666666;
+  width: 140rpx;
+  flex-shrink: 0;
+  text-align: justify;
+  text-align-last: justify;
+}
+
+.contact-value-flex {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333333;
+  line-height: 1.6;
+  margin-left: 20rpx;
+}
+
+.contact-icon-wrapper {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.contact-icon-emoji {
+  font-size: 36rpx;
+  color: #999999;
+}
+
+.contact-divider {
+  height: 1rpx;
+  background-color: #EEEEEE;
+  margin: 0 20rpx;
+}
+
+.contact-phone {
+  color: #d81e06;
+}
+
+/* ==================== 公司信息展示 ==================== */
+.company-info-section {
+  background-color: #FFFFFF;
+  border-radius: 12rpx;
+  padding: 32rpx;
+  margin-bottom: 24rpx;
+}
+
+.company-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+.company-logo-small {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 8rpx;
+  margin-right: 16rpx;
+}
+
+.company-name-small {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333333;
+}
+
+.company-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.meta-item {
+  font-size: 26rpx;
+  color: #666666;
+}
+
+/* ==================== 加载状态 ==================== */
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400rpx;
+}
+
+.loading-text {
+  font-size: 28rpx;
+  color: #999999;
+  margin-left: 16rpx;
+}
+
+/* ==================== 错误状态 ==================== */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400rpx;
+  padding: 32rpx;
+}
+
+.error-text {
+  font-size: 28rpx;
+  color: #999999;
+  margin-bottom: 24rpx;
+  text-align: center;
+}
+
+.retry-btn {
+  padding: 16rpx 48rpx;
+  background-color: #FFD700;
+  color: #333333;
+  font-size: 28rpx;
+  border-radius: 32rpx;
+}

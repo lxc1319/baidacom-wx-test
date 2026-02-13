@@ -1,0 +1,95 @@
+/* 运单卡片组件样式 */
+.waybill-card {
+  position: relative;
+  background-color: #FFFFFF;
+  padding: 24rpx;
+  border-radius: 16rpx;
+  border: 1rpx solid #E5E5E5;
+  margin-bottom: 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+/* 卡片内容区域 */
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+  padding-right: 80rpx; /* 为收藏图标留出空间 */
+}
+
+/* 卡片行 */
+.card-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+/* 姓名 */
+.card-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333333;
+  min-width: 120rpx;
+}
+
+/* 地址/状态 */
+.card-address {
+  flex: 1;
+  font-size: 28rpx;
+  color: #666666;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 日期 */
+.card-date {
+  font-size: 24rpx;
+  color: #999999;
+  white-space: nowrap;
+}
+
+/* 物流公司 */
+.card-company {
+  font-size: 28rpx;
+  color: #666666;
+  min-width: 120rpx;
+}
+
+/* 物流状态 */
+.card-status {
+  flex: 1;
+  font-size: 28rpx;
+  color: #FF6B00;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 收藏图标容器 */
+.favorite-icon-wrapper {
+  position: absolute;
+  top: 24rpx;
+  right: 24rpx;
+  width: 80rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 收藏图标 */
+.favorite-icon {
+  font-size: 48rpx;
+  transition: all 0.3s ease;
+}
+
+/* 已订阅状态 - 实心红色星标 */
+.favorite-icon.subscribed {
+  color: #FF0000;
+}
+
+/* 未订阅状态 - 空心黄色星标 */
+.favorite-icon.unsubscribed {
+  color: #FFD700;
+}

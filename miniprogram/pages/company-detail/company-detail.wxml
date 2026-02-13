@@ -1,0 +1,345 @@
+<!-- 物流公司详情页 -->
+<view class="company-detail-page">
+  <!-- 顶部轮播图区域 -->
+  <view class="banner-section" wx:if="{{banners.length > 0}}">
+    <banner-swiper
+      banners="{{banners}}"
+      indicatorType="bar"
+      bind:bannerClick="onBannerClick"
+    />
+  </view>
+
+  <!-- 消息通告栏 -->
+  <view class="notice-section" bindtap="onNoticeClick">
+    <view class="notice-content">
+      <view class="notice-icon">
+        <text class="icon-notice">📢</text>
+      </view>
+      <swiper class="notice-swiper" vertical autoplay circular interval="3000" wx:if="{{noticeList.length > 0}}">
+        <swiper-item class="notice-item" wx:for="{{noticeList}}" wx:key="id">
+          <text class="notice-text">{{item.title}}</text>
+        </swiper-item>
+      </swiper>
+      <!-- 无数据时显示占位文本 -->
+      <view class="notice-swiper no-data" wx:else>
+        <text class="notice-text">暂无通知公告</text>
+      </view>
+      <view class="notice-arrow">
+        <text class="icon-arrow">></text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 运单查询区域 -->
+  <view class="search-section">
+    <view class="search-box">
+      <!-- 扫描图标 -->
+      <view class="scan-icon" bindtap="onScanCode">
+        <view class="qr-code-icon">
+          <view class="corner corner-tl"></view>
+          <view class="corner corner-tr"></view>
+          <view class="corner corner-bl"></view>
+          <view class="corner corner-br"></view>
+        </view>
+      </view>
+      <!-- 输入框 -->
+      <input
+        class="search-input"
+        type="text"
+        placeholder="请输入运单号"
+        value="{{waybillCode}}"
+        bindinput="onWaybillInput"
+      />
+      <!-- 清除按钮 -->
+      <view class="clear-icon" wx:if="{{waybillCode}}" bindtap="onClearInput">
+        <view class="clear-icon-inner">
+          <text class="icon-clear">×</text>
+        </view>
+      </view>
+      <!-- 查询按钮 -->
+      <view class="search-btn" bindtap="onSearchWaybill">查询</view>
+    </view>
+  </view>
+
+  <!-- 标签页导航和内容区域（整体） -->
+  <view class="tab-section">
+    <!-- 标签页导航 -->
+    <view class="tab-nav">
+      <block wx:for="{{tabList}}" wx:key="index">
+        <view 
+          class="tab-item {{currentTab === index ? 'active' : ''}}"
+          data-index="{{index}}"
+          bindtap="onTabChange"
+        >{{item}}</view>
+      </block>
+    </view>
+
+    <!-- 标签页内容区域 -->
+    <view class="tab-content">
+    <!-- 品牌简介标签页 -->
+    <view class="brand-intro-tab" wx:if="{{currentTab === 0}}">
+      <!-- 公司简介 - 使用 rich-text 解析 HTML -->
+      <view class="company-desc" wx:if="{{companyInfo && companyInfo.organizationDesc}}">
+        <rich-text nodes="{{companyInfo.organizationDesc}}"></rich-text>
+      </view>
+      
+      <!-- 空状态 -->
+      <view class="empty-state" wx:if="{{!companyInfo || !companyInfo.organizationDesc}}">
+        <text>暂无公司介绍</text>
+      </view>
+    </view>
+
+    <!-- 网点查询标签页 -->
+    <view class="branch-query-tab" wx:if="{{currentTab === 1}}">
+      <!-- 搜索框 -->
+      <view class="search-box-wrapper">
+        <input 
+          class="search-input-branch"
+          type="text"
+          placeholder="请输入网点名称或地址"
+          value="{{searchKeyword}}"
+          bindinput="onSearchInput"
+        />
+        <view 
+          class="clear-btn-circle" 
+          wx:if="{{searchKeyword}}"
+          bindtap="onClearSearch"
+        >
+          <text class="clear-icon-text">×</text>
+        </view>
+      </view>
+      
+      <!-- 网点列表 -->
+      <view class="branch-list">
+        <block wx:for="{{filteredBranches}}" wx:key="id">
+          <view class="branch-item">
+            <!-- 网点名称 -->
+            <view class="branch-row">
+              <text class="branch-label">网点名称：</text>
+              <text class="branch-value">{{item.branchName}}</text>
+            </view>
+            
+            <!-- 联系电话 -->
+            <view class="branch-row" bindtap="onCallPhone" data-phone="{{item.branchMobile}}">
+              <text class="branch-label">联系电话：</text>
+              <text class="branch-value">{{item.branchMobile}}</text>
+              <text class="branch-icon">📞</text>
+            </view>
+            
+            <!-- 网点地址 -->
+            <view class="branch-row" bindtap="onOpenLocation" data-branch="{{item}}">
+              <text class="branch-label">网点地址：</text>
+              <text class="branch-value">{{item.branchAddress}}</text>
+              <text class="branch-icon">📍</text>
+            </view>
+          </view>
+        </block>
+        
+        <!-- 空状态 -->
+        <view class="empty-state" wx:if="{{filteredBranches.length === 0}}">
+          <text>暂无匹配的网点</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 线路查询标签页 -->
+    <view class="route-query-tab" wx:if="{{currentTab === 2}}">
+      <!-- 搜索框区域 -->
+      <view class="search-section-route">
+        <!-- 始发城镇输入框 -->
+        <view class="search-box-route">
+          <input 
+            class="search-input-route"
+            type="text"
+            placeholder="始发城镇"
+            value="{{loadCity}}"
+            bindinput="onLoadCityInput"
+            bindfocus="onLoadCityFocus"
+            bindblur="onLoadCityBlur"
+          />
+          <view 
+            class="clear-btn-route" 
+            wx:if="{{loadCity}}"
+            bindtap="onClearLoadCity"
+          >
+            <text class="clear-icon-route">×</text>
+          </view>
+          <!-- 城镇选择下拉列表 -->
+          <view class="city-dropdown" wx:if="{{showLoadCityDropdown && filteredLoadCities.length > 0}}">
+            <block wx:for="{{filteredLoadCities}}" wx:key="index">
+              <view class="city-item" bindtap="onSelectLoadCity" data-city="{{item}}">
+                {{item}}
+              </view>
+            </block>
+          </view>
+        </view>
+        
+        <!-- 箭头图标 -->
+        <view class="arrow-icon-wrapper">
+          <text class="arrow-icon">→</text>
+        </view>
+        
+        <!-- 到达城镇输入框 -->
+        <view class="search-box-route">
+          <input 
+            class="search-input-route"
+            type="text"
+            placeholder="到达城镇"
+            value="{{discCity}}"
+            bindinput="onDiscCityInput"
+            bindfocus="onDiscCityFocus"
+            bindblur="onDiscCityBlur"
+          />
+          <view 
+            class="clear-btn-route" 
+            wx:if="{{discCity}}"
+            bindtap="onClearDiscCity"
+          >
+            <text class="clear-icon-route">×</text>
+          </view>
+          <!-- 城镇选择下拉列表 -->
+          <view class="city-dropdown" wx:if="{{showDiscCityDropdown && filteredDiscCities.length > 0}}">
+            <block wx:for="{{filteredDiscCities}}" wx:key="index">
+              <view class="city-item" bindtap="onSelectDiscCity" data-city="{{item}}">
+                {{item}}
+              </view>
+            </block>
+          </view>
+        </view>
+      </view>
+      
+      <!-- 线路列表 -->
+      <view class="route-list">
+        <block wx:for="{{filteredRoutes}}" wx:key="id">
+          <view class="route-item">
+            <!-- 线路路由 -->
+            <view class="route-row route-header-row">
+              <text class="route-label">线路路由：</text>
+              <text class="route-value route-name">{{item.branchRouteName}}</text>
+            </view>
+            <view class="route-divider"></view>
+            
+            <!-- 始发网点 -->
+            <view class="route-row">
+              <text class="route-label">始发网点：</text>
+              <view class="route-info-wrapper" wx:if="{{item.loadBranch}}">
+                <view class="route-info-main">
+                  <text class="route-branch-name">{{item.loadBranch.branchName}}</text>
+                  <text class="route-branch-phone">{{item.loadBranch.branchMobile || item.loadBranch.branchPhone}}</text>
+                </view>
+                <view class="route-info-address">{{item.loadBranch.branchAddress}}</view>
+              </view>
+              <view class="route-action-icon" bindtap="onCallPhone" data-phone="{{item.loadBranch.branchMobile || item.loadBranch.branchPhone}}" wx:if="{{item.loadBranch}}">
+                <text class="phone-icon">📞</text>
+              </view>
+            </view>
+            <view class="route-divider"></view>
+            
+            <!-- 到达网点 -->
+            <view class="route-row">
+              <text class="route-label">到达网点：</text>
+              <view class="route-info-wrapper" wx:if="{{item.discBranch}}">
+                <view class="route-info-main">
+                  <text class="route-branch-name">{{item.discBranch.branchName}}</text>
+                  <text class="route-branch-phone">{{item.discBranch.branchMobile || item.discBranch.branchPhone}}</text>
+                </view>
+                <view class="route-info-address">{{item.discBranch.branchAddress}}</view>
+              </view>
+              <view class="route-action-icon" bindtap="onCallPhone" data-phone="{{item.discBranch.branchMobile || item.discBranch.branchPhone}}" wx:if="{{item.discBranch}}">
+                <text class="phone-icon">📞</text>
+              </view>
+            </view>
+            <view class="route-divider"></view>
+            
+            <!-- 线路时效 -->
+            <view class="route-row">
+              <text class="route-label">线路时效：</text>
+              <text class="route-value">{{item.lineTypeLabel}}{{item.lineValidityLabel}}</text>
+            </view>
+            <view class="route-divider"></view>
+            
+            <!-- 线路价格 -->
+            <view class="route-row">
+              <text class="route-label">线路价格：</text>
+              <text class="route-value"></text>
+            </view>
+            <view class="route-divider"></view>
+            
+            <!-- 增值服务 -->
+            <view class="route-row">
+              <text class="route-label">增值服务：</text>
+              <text class="route-value">{{item.routeServicesLabel}}</text>
+            </view>
+          </view>
+        </block>
+        
+        <!-- 空状态 -->
+        <view class="empty-state" wx:if="{{filteredRoutes.length === 0}}">
+          <text>暂无匹配的线路</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 联系我们标签页 -->
+    <view class="contact-tab" wx:if="{{currentTab === 3 && companyInfo}}">
+      <view class="contact-card">
+        <!-- 总部地址 -->
+        <view class="contact-item" wx:if="{{companyInfo.address}}">
+          <text class="contact-label-fixed">总部地址：</text>
+          <text class="contact-value-flex">{{companyInfo.address}}</text>
+          <view class="contact-icon-wrapper" bindtap="onOpenCompanyMap">
+            <text class="contact-icon-emoji">📍</text>
+          </view>
+        </view>
+        <view class="contact-divider" wx:if="{{companyInfo.address}}"></view>
+        
+        <!-- 联系人 -->
+        <view class="contact-item" wx:if="{{companyInfo.principalName}}">
+          <text class="contact-label-fixed">联 系 人：</text>
+          <text class="contact-value-flex">{{companyInfo.principalName}}</text>
+        </view>
+        <view class="contact-divider" wx:if="{{companyInfo.principalName}}"></view>
+        
+        <!-- 客服电话 -->
+        <view class="contact-item" wx:if="{{companyInfo.organizationPhone}}">
+          <text class="contact-label-fixed">客服电话：</text>
+          <text class="contact-value-flex">{{companyInfo.organizationPhone}}</text>
+          <view class="contact-icon-wrapper" bindtap="onCallPhone" data-phone="{{companyInfo.organizationPhone}}">
+            <text class="contact-icon-emoji">📞</text>
+          </view>
+        </view>
+        <view class="contact-divider" wx:if="{{companyInfo.organizationPhone}}"></view>
+        
+        <!-- 业务经理 -->
+        <view class="contact-item" wx:if="{{companyInfo.principalPhone}}">
+          <text class="contact-label-fixed">业务经理：</text>
+          <text class="contact-value-flex">{{companyInfo.principalPhone}}</text>
+          <view class="contact-icon-wrapper" bindtap="onCallPhone" data-phone="{{companyInfo.principalPhone}}">
+            <text class="contact-icon-emoji">📞</text>
+          </view>
+        </view>
+        <view class="contact-divider" wx:if="{{companyInfo.principalPhone}}"></view>
+        
+        <!-- 咨询电话 -->
+        <view class="contact-item" wx:if="{{companyInfo.corporationPhone}}">
+          <text class="contact-label-fixed">咨询电话：</text>
+          <text class="contact-value-flex">{{companyInfo.corporationPhone}}</text>
+          <view class="contact-icon-wrapper" bindtap="onCallPhone" data-phone="{{companyInfo.corporationPhone}}">
+            <text class="contact-icon-emoji">📞</text>
+          </view>
+        </view>
+        <view class="contact-divider" wx:if="{{companyInfo.corporationPhone}}"></view>
+        
+        <!-- 公司网址 -->
+        <view class="contact-item" wx:if="{{companyInfo.organizationUrl}}">
+          <text class="contact-label-fixed">公司网址：</text>
+          <text class="contact-value-flex url">{{companyInfo.organizationUrl}}</text>
+          <view class="contact-icon-wrapper" bindtap="onCopyUrl">
+            <text class="contact-icon-emoji">🌐</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  </view>
+</view>

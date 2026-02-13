@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "运单详情",
+  "enablePullDownRefresh": true,
+  "backgroundColor": "#F5F5F5",
+  "usingComponents": {
+    "barcode": "/components/barcode/barcode"
+  }
+}

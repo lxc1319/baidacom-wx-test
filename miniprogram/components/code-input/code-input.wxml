@@ -1,0 +1,24 @@
+<!-- 验证码输入组件 -->
+<view class="code-input">
+  <!-- 隐藏的真实输入框 -->
+  <input 
+    class="hidden-input"
+    type="number"
+    maxlength="{{codeLength}}"
+    value="{{code}}"
+    focus="{{autoFocus}}"
+    bindinput="onInput"
+    bindblur="onBlur"
+    bindfocus="onFocus"
+  />
+  
+  <!-- 显示的验证码框 -->
+  <view class="code-boxes" bindtap="onBoxClick">
+    <block wx:for="{{codeLength}}" wx:key="index">
+      <view class="code-box {{currentIndex === index ? 'active' : ''}}">
+        <text class="code-text" wx:if="{{codeArray[index]}}">{{codeArray[index]}}</text>
+        <view class="code-cursor" wx:if="{{currentIndex === index && isFocused}}"></view>
+      </view>
+    </block>
+  </view>
+</view>

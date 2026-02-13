@@ -1,0 +1,16 @@
+<!-- 加载组件 -->
+<view class="loading {{fullscreen ? 'fullscreen' : ''}}" wx:if="{{visible}}">
+  <!-- 遮罩层（仅全屏模式） -->
+  <view class="loading-mask" wx:if="{{fullscreen}}"></view>
+  
+  <!-- 加载内容 -->
+  <view class="loading-content">
+    <!-- 加载动画 -->
+    <view class="loading-spinner">
+      <view class="spinner-circle"></view>
+    </view>
+    
+    <!-- 加载文字 -->
+    <view class="loading-text" wx:if="{{text}}">{{text}}</view>
+  </view>
+</view>

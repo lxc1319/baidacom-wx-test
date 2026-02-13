@@ -1,0 +1,62 @@
+<!-- 运单身份验证页 -->
+<view class="verify-page">
+  <!-- 红色渐变头部 -->
+  <view class="verify-header">
+    <view class="header-bg"></view>
+  </view>
+
+  <!-- 白色卡片内容区 -->
+  <view class="verify-card">
+    <!-- 运单信息展示 -->
+    <view class="waybill-info">
+      <text class="company-name">{{logisticsCompaniesName || '百达物流'}}</text>
+      <text class="waybill-code">{{waybillCode}}</text>
+      <text class="copy-icon" bindtap="onCopyCode">📋</text>
+    </view>
+
+    <!-- 验证提示 -->
+    <view class="verify-tip">
+      <text class="tip-line1">请输入<text class="highlight">寄件人</text>或<text class="highlight">收件人</text></text>
+      <text class="tip-line2">联系方式后四位验证身份</text>
+    </view>
+
+    <!-- 验证码输入组件 - 下划线样式 -->
+    <view class="code-input-wrapper">
+      <view class="underline-inputs">
+        <view class="underline-box {{code.length >= 1 ? 'filled' : ''}} {{currentIndex === 0 ? 'active' : ''}}">
+          <text class="underline-text">{{code[0] || ''}}</text>
+        </view>
+        <view class="underline-box {{code.length >= 2 ? 'filled' : ''}} {{currentIndex === 1 ? 'active' : ''}}">
+          <text class="underline-text">{{code[1] || ''}}</text>
+        </view>
+        <view class="underline-box {{code.length >= 3 ? 'filled' : ''}} {{currentIndex === 2 ? 'active' : ''}}">
+          <text class="underline-text">{{code[2] || ''}}</text>
+        </view>
+        <view class="underline-box {{code.length >= 4 ? 'filled' : ''}} {{currentIndex === 3 ? 'active' : ''}}">
+          <text class="underline-text">{{code[3] || ''}}</text>
+        </view>
+      </view>
+      <!-- 隐藏的真实输入框 -->
+      <input
+        class="hidden-input"
+        type="number"
+        maxlength="4"
+        value="{{code}}"
+        focus="{{autoFocus}}"
+        bindinput="onInput"
+        bindfocus="onFocus"
+        bindblur="onBlur"
+      />
+    </view>
+
+    <!-- 错误提示 -->
+    <view class="error-tip" wx:if="{{errorMessage}}">
+      <text class="error-text">{{errorMessage}}</text>
+    </view>
+
+    <!-- 重试提示 -->
+    <view class="retry-tip" wx:if="{{errorCount > 0}}">
+      <text class="retry-text">已尝试 {{errorCount}}/{{maxErrorCount}} 次</text>
+    </view>
+  </view>
+</view>

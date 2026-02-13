@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "物流追踪",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "banner-swiper": "/components/banner-swiper/banner-swiper",
+    "waybill-card": "/components/waybill-card/waybill-card",
+    "waybill-result-modal": "/components/waybill-result-modal/waybill-result-modal",
+    "skeleton": "/components/skeleton/skeleton"
+  }
+}

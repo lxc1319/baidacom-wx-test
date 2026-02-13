@@ -1,0 +1,28 @@
+<!-- 查询结果弹窗组件 -->
+<view class="result-modal" wx:if="{{visible}}">
+  <!-- 遮罩层 -->
+  <view class="modal-mask" bindtap="onMaskClick"></view>
+
+  <!-- 弹窗内容 -->
+  <view class="modal-content">
+    <!-- 表格 -->
+    <view class="result-table">
+      <!-- 表头 -->
+      <view class="table-header">
+        <text class="header-cell">收货人</text>
+        <text class="header-cell">收货地址</text>
+        <text class="header-cell">操作</text>
+      </view>
+
+      <!-- 数据行 - 支持列表 -->
+      <view class="table-row" wx:for="{{results}}" wx:key="id" data-item="{{item}}" bindtap="onViewDetail">
+        <text class="data-cell">{{item.collectName || ''}}</text>
+        <text class="data-cell address">{{item.collectAddress || ''}}</text>
+        <text class="data-cell link">查看详情</text>
+      </view>
+    </view>
+
+    <!-- 取消按钮 -->
+    <view class="cancel-btn" bindtap="onCancel">取消</view>
+  </view>
+</view>

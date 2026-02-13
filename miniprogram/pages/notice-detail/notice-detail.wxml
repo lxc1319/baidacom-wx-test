@@ -1,0 +1,35 @@
+<!--pages/notice-detail/notice-detail.wxml-->
+<!-- 通知公告详情页 -->
+<view class="notice-detail-page" wx:if="{{noticeDetail}}">
+  <!-- 内容区域 -->
+  <view class="content">
+    <!-- 头部 -->
+    <view class="header">
+      <!-- 公告标题 -->
+      <text class="notice-title">{{noticeDetail.title}}</text>
+      
+      <!-- 作者和时间 -->
+      <view class="notice-meta">
+        <view class="meta-author">
+          作者: <text>{{noticeDetail.creator || ''}}</text>
+        </view>
+        <view class="meta-time">
+          时间: <text>{{noticeDetail.createTime}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 分割线 -->
+    <view class="divider"></view>
+    
+    <!-- 公告内容 -->
+    <view class="notice-content">
+      <rich-text nodes="{{noticeDetail.content}}"></rich-text>
+    </view>
+  </view>
+</view>
+
+<!-- 加载中状态 -->
+<view class="loading-container" wx:if="{{loading}}">
+  <text>加载中...</text>
+</view>

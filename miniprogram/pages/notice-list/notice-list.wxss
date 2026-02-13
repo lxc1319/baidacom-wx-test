@@ -1,0 +1,87 @@
+/* pages/notice-list/notice-list.wxss */
+
+/* 通知公告列表页 */
+.notice-list-page {
+  min-height: 100vh;
+  background-color: #f1f1f1;
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+
+/* 公告列表 */
+.notice-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+/* 公告卡片 */
+.notice-card {
+  background-color: #ffffff;
+  border-radius: 10rpx;
+  padding: 20rpx 0;
+}
+
+/* 公告标题 */
+.notice-title {
+  font-size: 30rpx;
+  color: #000000;
+  text-align: center;
+  padding: 0 20rpx;
+  line-height: 1.4;
+  word-break: break-all;
+}
+
+/* 公告内容摘要 */
+.notice-content {
+  margin: 20rpx 0;
+  font-size: 30rpx;
+  color: #000000;
+  padding: 0 20rpx;
+  line-height: 1.6;
+}
+
+/* 内容段落缩进 */
+.notice-content rich-text p {
+  text-indent: 2em;
+  margin: 0;
+}
+
+/* 阅读详情按钮 */
+.read-detail-btn {
+  border-top: 1rpx solid #eeeeee;
+  padding-top: 20rpx;
+  text-align: center;
+}
+
+.read-detail-btn text {
+  font-size: 30rpx;
+  color: #d81e06;
+}
+
+/* 空状态 */
+.empty-state {
+  padding: 120rpx 0;
+  text-align: center;
+}
+
+.empty-state text {
+  font-size: 28rpx;
+  color: #999999;
+}
+
+/* 底部提示 */
+.no-more-tip {
+  font-size: 24rpx;
+  color: #999999;
+  text-align: center;
+  padding: 32rpx 0;
+}
+
+/* 加载提示 */
+.loading-tip {
+  font-size: 28rpx;
+  color: #999999;
+  text-align: center;
+  padding: 32rpx 0;
+}

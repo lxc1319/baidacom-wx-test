@@ -1,0 +1,25 @@
+<!-- 运单卡片组件 -->
+<view class="waybill-card" bindtap="onCardClick">
+  <!-- 卡片主体内容 -->
+  <view class="card-content">
+    <!-- 第一行：姓名、地址/状态、日期 -->
+    <view class="card-row">
+      <text class="card-name">{{displayName}}</text>
+      <text class="card-address">{{displayAddress}}</text>
+      <text class="card-date">{{displayDate}}</text>
+    </view>
+    
+    <!-- 第二行：物流公司、物流状态 -->
+    <view class="card-row">
+      <text class="card-company">{{waybillData.logisticsCompaniesName || ''}}</text>
+      <text class="card-status">{{waybillData.orderStatusDesc || ''}}</text>
+    </view>
+  </view>
+  
+  <!-- 收藏图标 -->
+  <view class="favorite-icon-wrapper" catchtap="onFavoriteClick">
+    <text class="favorite-icon {{waybillData.subscribeFlag ? 'subscribed' : 'unsubscribed'}}">
+      {{waybillData.subscribeFlag ? '★' : '☆'}}
+    </text>
+  </view>
+</view>

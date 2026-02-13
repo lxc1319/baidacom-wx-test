@@ -1,0 +1,31 @@
+<!-- 滚动通知组件（跑马灯） -->
+<view class="notice-scroll" bindtap="onNoticeClick">
+  <!-- 左侧喇叭图标 -->
+  <view class="notice-icon">
+    <text class="icon-speaker">🔊</text>
+  </view>
+  
+  <!-- 中间滚动文字区域 -->
+  <view class="notice-content">
+    <swiper 
+      class="notice-swiper"
+      vertical="{{true}}"
+      autoplay="{{autoplay}}"
+      interval="{{interval}}"
+      duration="{{duration}}"
+      circular="{{circular}}"
+      display-multiple-items="{{1}}"
+    >
+      <block wx:for="{{noticeList}}" wx:key="id">
+        <swiper-item>
+          <view class="notice-text">{{item.title || item.content}}</view>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+  
+  <!-- 右侧箭头图标 -->
+  <view class="notice-arrow">
+    <text class="icon-arrow">›</text>
+  </view>
+</view>

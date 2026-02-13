@@ -1,0 +1,33 @@
+<!-- 时间轴组件 -->
+<view class="timeline">
+  <block wx:for="{{trackList}}" wx:key="index">
+    <view class="timeline-item">
+      <!-- 时间轴节点 -->
+      <view class="timeline-node">
+        <view class="node-dot {{index === 0 ? 'active' : ''}}"></view>
+        <view class="node-line" wx:if="{{index < trackList.length - 1}}"></view>
+      </view>
+      
+      <!-- 时间轴内容 -->
+      <view class="timeline-content">
+        <!-- 时间 -->
+        <view class="content-time">{{item.createTime}}</view>
+        
+        <!-- 事件内容 -->
+        <view class="content-text">{{item.eventLog}}</view>
+        
+        <!-- 节点信息 -->
+        <view class="content-info" wx:if="{{item.eventNode || item.deptName}}">
+          <text wx:if="{{item.eventNode}}">{{item.eventNode}}</text>
+          <text wx:if="{{item.deptName}}" class="info-dept">{{item.deptName}}</text>
+          <text wx:if="{{item.userName}}" class="info-user">{{item.userName}}</text>
+        </view>
+      </view>
+    </view>
+  </block>
+  
+  <!-- 空状态 -->
+  <view class="timeline-empty" wx:if="{{!trackList || trackList.length === 0}}">
+    <text>暂无物流轨迹信息</text>
+  </view>
+</view>

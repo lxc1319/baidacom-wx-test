@@ -1,0 +1,572 @@
+/* pages/waybill-detail/waybill-detail.wxss */
+
+/* 页面容器 */
+.waybill-detail-page {
+  min-height: 100vh;
+  background-color: #F5F5F5;
+}
+
+/* 标签页导航 - 左对齐 */
+.tab-nav {
+  display: flex;
+  background-color: #FFFFFF;
+  padding: 0 24rpx;
+}
+
+.tab-item {
+  position: relative;
+  padding: 24rpx 0;
+  margin-right: 48rpx;
+}
+
+.tab-text {
+  font-size: 28rpx;
+  color: #666666;
+}
+
+.tab-item.active .tab-text {
+  color: #333333;
+  font-weight: 500;
+}
+
+.tab-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4rpx;
+  background-color: #E53935;
+}
+
+/* 标签页内容 */
+.tab-content {
+  padding: 20rpx;
+}
+
+.tab-panel {
+  background-color: #FFFFFF;
+  border-radius: 8rpx;
+}
+
+/* 电子存根内容 */
+.stub-content {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 条形码区域 */
+.barcode-section {
+  display: flex;
+  padding: 0;
+  border-bottom: 1rpx solid #EEEEEE;
+}
+
+.barcode-wrapper {
+  flex: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx 24rpx;
+}
+
+/* 条形码组件样式覆盖 */
+.barcode-wrapper .barcode {
+  padding: 0;
+  background-color: transparent;
+}
+
+.barcode-wrapper .barcode-canvas {
+  border: none;
+  border-radius: 0;
+}
+
+.barcode-img {
+  width: 100%;
+  height: 100rpx;
+}
+
+.barcode-divider {
+  width: 1rpx;
+  background-color: #EEEEEE;
+  margin: 0;
+}
+
+.barcode-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20rpx 24rpx;
+}
+
+.dest-text {
+  font-size: 28rpx;
+  color: #666666;
+  margin-bottom: 12rpx;
+}
+
+.bill-text {
+  font-size: 26rpx;
+  color: #666666;
+}
+
+/* 寄件方/收件方区域 */
+.info-section {
+  padding: 16rpx 24rpx;
+  border-bottom: 1rpx solid #EEEEEE;
+}
+
+.section-label {
+  font-size: 26rpx;
+  color: #666666;
+  margin-bottom: 8rpx;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info-left {
+  display: flex;
+  align-items: center;
+}
+
+.icon-circle {
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18rpx;
+  color: #FFFFFF;
+  margin-right: 12rpx;
+}
+
+.icon-circle.gray {
+  background-color: #666666;
+}
+
+.icon-circle.red {
+  background-color: #E53935;
+}
+
+.info-name {
+  font-size: 28rpx;
+  color: #333333;
+}
+
+.info-right {
+  display: flex;
+  align-items: center;
+}
+
+.info-phone {
+  font-size: 28rpx;
+  color: #333333;
+  margin-right: 12rpx;
+}
+
+.eye-icon {
+  width: 44rpx;
+  height: 44rpx;
+  background-size: 32rpx 32rpx;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* 睁眼图标 - 手机号隐藏状态 */
+.eye-icon.eye-open {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23999999'%3E%3Cpath d='M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z'/%3E%3C/svg%3E");
+}
+
+/* 闭眼图标 - 手机号显示状态 */
+.eye-icon.eye-close {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23999999'%3E%3Cpath d='M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z'/%3E%3C/svg%3E");
+}
+
+.info-address {
+  font-size: 24rpx;
+  color: #999999;
+  padding-left: 44rpx;
+  margin-top: 4rpx;
+}
+
+/* 信息表格 - 无灰色背景 */
+.info-table {
+  border-bottom: 1rpx solid #EEEEEE;
+}
+
+.info-table.two-col .table-cell {
+  flex: 1;
+}
+
+.table-row {
+  display: flex;
+  padding: 12rpx 24rpx;
+}
+
+.table-cell {
+  flex: 1;
+  font-size: 26rpx;
+}
+
+.table-cell.label {
+  color: #999999;
+}
+
+.table-cell.value {
+  color: #333333;
+  font-weight: 500;
+}
+
+/* 底部信息 - 无横线 */
+.bottom-info {
+  padding: 16rpx 24rpx;
+}
+
+.bottom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8rpx 0;
+}
+
+.bottom-label {
+  font-size: 26rpx;
+  color: #666666;
+}
+
+.bottom-value {
+  font-size: 26rpx;
+  color: #333333;
+}
+
+/* 运输状态内容 */
+.status-content {
+  padding: 0;
+  background-color: #F5F5F5;
+  min-height: 100%;
+}
+
+/* 当前状态头部 */
+.status-header {
+  display: flex;
+  align-items: stretch;
+  background-color: #FFFFFF;
+  margin: 0 0 20rpx;
+  border-radius: 12rpx;
+  overflow: hidden;
+  padding: 0;
+  height: 160rpx;
+}
+
+.status-left {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  height: 100%;
+}
+
+.status-title {
+  font-size: 32rpx;
+  color: #333333;
+  font-weight: 500;
+  padding: 0 16rpx;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.status-title-divider {
+  width: 100%;
+  height: 2rpx;
+  background-color: #EEEEEE;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.status-time-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  padding: 0 16rpx;
+  height: 50%;
+  box-sizing: border-box;
+}
+
+.status-label {
+  font-size: 24rpx;
+  color: #999999;
+  margin-right: 4rpx;
+  white-space: nowrap;
+}
+
+.status-value {
+  font-size: 24rpx;
+  color: #333333;
+  white-space: nowrap;
+}
+
+.status-divider-v {
+  width: 1rpx;
+  height: 100%;
+  background-color: #EEEEEE;
+  align-self: stretch;
+}
+
+.status-center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 12rpx;
+}
+
+.from-address {
+  font-size: 26rpx;
+  color: #333333;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.status-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8rpx;
+}
+
+.arrow-circle {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  background-color: #E53935;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrow-text {
+  color: #FFFFFF;
+  font-size: 28rpx;
+  font-weight: bold;
+}
+
+.status-right {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 12rpx;
+}
+
+.to-address {
+  font-size: 26rpx;
+  color: #333333;
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* 物流轨迹区域 */
+.track-section {
+  background-color: #FFFFFF;
+  margin: 0;
+  border-radius: 12rpx;
+  padding: 24rpx;
+}
+
+/* 物流轨迹列表 */
+.track-list {
+  padding: 0;
+}
+
+.track-item {
+  display: flex;
+  position: relative;
+  align-items: flex-start;
+}
+
+/* showTitle=false时的样式 - 垂直居中 */
+.track-item.no-title {
+  align-items: center;
+}
+
+.track-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60rpx;
+  padding-top: 4rpx;
+}
+
+/* showTitle=false时的track-left - 垂直居中 */
+.track-item.no-title .track-left {
+  padding-top: 0;
+}
+
+.track-icon-wrap {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+/* 大图标 - showTitle=true */
+.track-icon-wrap.icon-large {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+/* 小圆点 - showTitle=false */
+.track-icon-wrap.icon-small {
+  width: 16rpx;
+  height: 16rpx;
+  background-color: #999999;
+}
+
+.track-icon-wrap.active {
+  background-color: #E53935;
+}
+
+.track-icon-wrap.received {
+  background-color: #999999;
+}
+
+/* 小圆点样式 */
+.icon-dot-small {
+  width: 8rpx;
+  height: 8rpx;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+}
+
+.track-icon-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-truck {
+  font-size: 28rpx;
+  color: #FFFFFF;
+}
+
+.icon-received {
+  font-size: 28rpx;
+  color: #FFFFFF;
+}
+
+/* 签收图标 - 收字 */
+.icon-sign {
+  font-size: 24rpx;
+  color: #FFFFFF;
+  font-weight: bold;
+}
+
+.icon-dot {
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 50%;
+  background-color: #999999;
+}
+
+.track-line {
+  position: absolute;
+  left: 28rpx;
+  top: 48rpx;
+  width: 2rpx;
+  height: calc(100% - 48rpx);
+  background-color: #EEEEEE;
+  z-index: 1;
+}
+
+/* showTitle=false时的连接线 - 调整位置 */
+.track-item.no-title .track-line {
+  top: 50%;
+  height: 50%;
+}
+
+.track-right {
+  flex: 1;
+  padding-bottom: 40rpx;
+  padding-left: 16rpx;
+}
+
+.track-item:last-child .track-right {
+  padding-bottom: 0;
+}
+
+.track-status-wrap {
+  margin-bottom: 8rpx;
+}
+
+.track-status {
+  font-size: 30rpx;
+  color: #333333;
+  font-weight: 500;
+}
+
+.track-item.active .track-status {
+  color: #E53935;
+}
+
+.track-time {
+  display: block;
+  font-size: 26rpx;
+  color: #666666;
+  margin-bottom: 8rpx;
+}
+
+.track-content {
+  margin-top: 8rpx;
+}
+
+.track-time-row {
+  margin-bottom: 8rpx;
+}
+
+.track-detail {
+  display: block;
+  font-size: 26rpx;
+  line-height: 1.5;
+}
+
+.content-text {
+  font-size: 26rpx;
+  color: #333333;
+  display: inline;
+}
+
+/* 非第一条数据的内容显示为灰色 */
+.content-text-gray {
+  color: #606266;
+}
+
+.phone-blue {
+  color: #1890FF;
+}
+
+.empty-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24rpx 0;
+  color: #999999;
+  font-size: 28rpx;
+  text-align: center;
+}

@@ -1,0 +1,29 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/waybill-verify/waybill-verify",
+    "pages/waybill-detail/waybill-detail",
+    "pages/company-detail/company-detail",
+    "pages/notice-list/notice-list",
+    "pages/notice-detail/notice-detail"
+  ],
+  "window": {
+    "backgroundColor": "#F5F5F5",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "navigationBarTitleText": "物流追踪",
+    "navigationBarTextStyle": "black"
+  },
+  "navigateToMiniProgramAppIdList": [
+    "wxAPPID_ROUTE_QUERY",
+    "wxAPPID_QUICK_ORDER"
+  ],
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents",
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于地图导航"
+    }
+  }
+}

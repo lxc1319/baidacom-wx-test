@@ -1,0 +1,15 @@
+<!-- 条形码展示组件 -->
+<view class="barcode">
+  <!-- 条形码图片 -->
+  <canvas 
+    canvas-id="barcodeCanvas" 
+    class="barcode-canvas"
+    style="width: {{canvasWidth}}px; height: {{canvasHeight}}px;"
+  ></canvas>
+  
+  <!-- 条形码文字 -->
+  <view class="barcode-text" wx:if="{{showCode}}">{{code}}</view>
+  
+  <!-- 长按提示 -->
+  <view class="barcode-tip" wx:if="{{showTip}}">长按保存条形码</view>
+</view>

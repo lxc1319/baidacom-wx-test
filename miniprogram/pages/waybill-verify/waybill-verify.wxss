@@ -1,0 +1,170 @@
+/* 运单身份验证页样式 */
+
+/* 页面容器 */
+.verify-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #E53935 0%, #FF6B6B 20%, #F5F5F5 40%, #F5F5F5 50%);
+  position: relative;
+}
+
+/* 红色渐变头部 */
+.verify-header {
+  height: 280rpx;
+  position: relative;
+  overflow: hidden;
+}
+
+.header-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+}
+
+/* 白色卡片 */
+.verify-card {
+  position: relative;
+  margin: -120rpx 32rpx 32rpx;
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 48rpx 40rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+  min-height: 500rpx;
+}
+
+/* 运单信息区域 */
+.waybill-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 64rpx;
+  padding-bottom: 32rpx;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+
+.company-name {
+  font-size: 28rpx;
+  color: #666666;
+  margin-right: 16rpx;
+}
+
+.waybill-code {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333333;
+  font-weight: 500;
+}
+
+.copy-icon {
+  font-size: 32rpx;
+  color: #999999;
+  padding: 8rpx;
+}
+
+/* 验证提示 */
+.verify-tip {
+  text-align: center;
+  margin-bottom: 64rpx;
+}
+
+.tip-line1 {
+  display: block;
+  font-size: 32rpx;
+  color: #333333;
+  margin-bottom: 8rpx;
+}
+
+.tip-line2 {
+  display: block;
+  font-size: 28rpx;
+  color: #666666;
+}
+
+.highlight {
+  font-weight: bold;
+  color: #333333;
+}
+
+/* 验证码输入区域 - 下划线样式 */
+.code-input-wrapper {
+  position: relative;
+  margin-bottom: 48rpx;
+}
+
+.underline-inputs {
+  display: flex;
+  justify-content: center;
+  gap: 48rpx;
+}
+
+.underline-box {
+  position: relative;
+  width: 80rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 4rpx solid #E0E0E0;
+  transition: all 0.3s ease;
+}
+
+.underline-box.filled {
+  border-bottom-color: #E53935;
+}
+
+.underline-box.active {
+  border-bottom-color: #E53935;
+}
+
+.underline-text {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #333333;
+}
+
+/* 隐藏的真实输入框 */
+.hidden-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: 10;
+}
+
+/* 错误提示 */
+.error-tip {
+  text-align: center;
+  margin-bottom: 16rpx;
+  animation: shake 0.5s;
+}
+
+.error-text {
+  font-size: 26rpx;
+  color: #FF4444;
+}
+
+/* 重试提示 */
+.retry-tip {
+  text-align: center;
+}
+
+.retry-text {
+  font-size: 24rpx;
+  color: #999999;
+}
+
+/* 抖动动画 */
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-10rpx);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(10rpx);
+  }
+}

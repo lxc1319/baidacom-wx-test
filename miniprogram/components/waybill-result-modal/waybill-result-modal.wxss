@@ -1,0 +1,108 @@
+/* 查询结果弹窗组件样式 */
+.result-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 遮罩层 */
+.modal-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* 弹窗内容 */
+.modal-content {
+  position: relative;
+  width: 85%;
+  max-width: 600rpx;
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 32rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+  animation: slideUp 0.3s ease;
+}
+
+/* 从底部滑入动画 */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* 表格 */
+.result-table {
+  width: 100%;
+}
+
+/* 表头 */
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #E5E5E5;
+}
+
+.header-cell {
+  flex: 1;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333333;
+  text-align: center;
+}
+
+/* 数据行 */
+.table-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 24rpx 0;
+}
+
+.data-cell {
+  flex: 1;
+  font-size: 28rpx;
+  color: #666666;
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* 地址单元格 - 支持换行 */
+.data-cell.address {
+  word-break: break-all;
+  white-space: normal;
+}
+
+/* 查看详情链接 */
+.data-cell.link {
+  color: #1890FF;
+  cursor: pointer;
+}
+
+/* 取消按钮 */
+.cancel-btn {
+  width: 200rpx;
+  height: 72rpx;
+  line-height: 72rpx;
+  text-align: center;
+  margin: 32rpx auto 0;
+  border: none;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  color: #1890FF;
+  background-color: transparent;
+}

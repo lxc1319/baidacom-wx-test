@@ -1,0 +1,24 @@
+<!-- 骨架屏组件 -->
+<view class="skeleton-container" wx:if="{{loading}}">
+  <!-- 轮播图骨架 -->
+  <view class="skeleton-banner"></view>
+  
+  <!-- 搜索框骨架 -->
+  <view class="skeleton-search"></view>
+  
+  <!-- 标签页骨架 -->
+  <view class="skeleton-tabs">
+    <view class="skeleton-tab"></view>
+    <view class="skeleton-tab"></view>
+    <view class="skeleton-tab"></view>
+  </view>
+  
+  <!-- 列表骨架 -->
+  <view class="skeleton-list">
+    <view class="skeleton-item" wx:for="{{[1,2,3]}}" wx:key="*this">
+      <view class="skeleton-line skeleton-line-title"></view>
+      <view class="skeleton-line skeleton-line-text"></view>
+      <view class="skeleton-line skeleton-line-text short"></view>
+    </view>
+  </view>
+</view>
