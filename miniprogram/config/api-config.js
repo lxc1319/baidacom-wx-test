@@ -20,7 +20,7 @@ const CURRENT_ENV = ENV.DEV
 const API_BASE_URL = {
   // 开发环境 API 地址（待配置）
 	// [ENV.DEV]: 'https://dev-api.example.com',
-	[ENV.DEV]: 'http://localhost:9108/app-api',
+	[ENV.DEV]: 'http://192.168.1.155:9108/app-api',
 
   // 测试环境 API 地址（待配置）
   [ENV.TEST]: 'https://test-api.example.com/app-api',

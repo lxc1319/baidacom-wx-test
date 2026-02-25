@@ -1,17 +1,16 @@
-/* 查询结果弹窗组件样式 */
-.result-modal {
+/* waybill-result-modal.wxss */
+.modal-container {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 1000;
+  z-index: 9999;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 }
 
-/* 遮罩层 */
 .modal-mask {
   position: absolute;
   top: 0;
@@ -21,88 +20,188 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-/* 弹窗内容 */
 .modal-content {
   position: relative;
-  width: 85%;
+  width: 90%;
   max-width: 600rpx;
-  background-color: #FFFFFF;
-  border-radius: 16rpx;
-  padding: 32rpx;
-  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
-  animation: slideUp 0.3s ease;
+  max-height: 80vh;
+  background-color: #ffffff;
+  border-radius: 10rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  z-index: 1;
 }
 
-/* 从底部滑入动画 */
-@keyframes slideUp {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-/* 表格 */
-.result-table {
-  width: 100%;
-}
-
-/* 表头 */
-.table-header {
+.modal-header {
   display: flex;
   justify-content: space-between;
-  padding: 16rpx 0;
-  border-bottom: 1rpx solid #E5E5E5;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  background-color: #f9f9f9;
 }
 
-.header-cell {
-  flex: 1;
-  font-size: 28rpx;
-  font-weight: bold;
+.modal-title {
+  font-size: 32rpx;
+  font-weight: 600;
   color: #333333;
-  text-align: center;
 }
 
-/* 数据行 */
-.table-row {
+.modal-close {
+  width: 40rpx;
+  height: 40rpx;
   display: flex;
-  justify-content: space-between;
-  padding: 24rpx 0;
-}
-
-.data-cell {
-  flex: 1;
-  font-size: 28rpx;
-  color: #666666;
-  line-height: 1.6;
-  text-align: center;
-}
-
-/* 地址单元格 - 支持换行 */
-.data-cell.address {
-  word-break: break-all;
-  white-space: normal;
-}
-
-/* 查看详情链接 */
-.data-cell.link {
-  color: #1890FF;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
 }
 
-/* 取消按钮 */
-.cancel-btn {
-  width: 200rpx;
-  height: 72rpx;
-  line-height: 72rpx;
+.close-icon {
+  font-size: 40rpx;
+  color: #999999;
+  line-height: 40rpx;
+}
+
+.modal-body {
+  padding: 30rpx;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.empty-state {
   text-align: center;
-  margin: 32rpx auto 0;
-  border: none;
-  border-radius: 8rpx;
+  padding: 80rpx 0;
+}
+
+.empty-text {
   font-size: 28rpx;
-  color: #1890FF;
-  background-color: transparent;
+  color: #999999;
+}
+
+.result-list {
+  width: 100%;
+}
+
+.result-item {
+  padding: 20rpx;
+  border: 1rpx solid #f0f0f0;
+  border-radius: 8rpx;
+  margin-bottom: 20rpx;
+  background-color: #f9f9f9;
+}
+
+.result-item:last-child {
+  margin-bottom: 0;
+}
+
+.result-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15rpx;
+  padding-bottom: 15rpx;
+  border-bottom: 1rpx solid #e0e0e0;
+}
+
+.waybill-code {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333333;
+}
+
+.company-name {
+  font-size: 24rpx;
+  color: #666666;
+  background-color: #ffffff;
+  padding: 4rpx 12rpx;
+  border-radius: 12rpx;
+}
+
+.result-item-body {
+  margin-bottom: 15rpx;
+}
+
+.result-info {
+  display: flex;
+  margin-bottom: 12rpx;
+  align-items: flex-start;
+}
+
+.info-label {
+  font-size: 24rpx;
+  color: #666666;
+  width: 120rpx;
+  flex-shrink: 0;
+}
+
+.info-value {
+  font-size: 24rpx;
+  color: #333333;
+  flex: 1;
+  line-height: 36rpx;
+}
+
+.result-item-footer {
+  text-align: right;
+  padding-top: 15rpx;
+  border-top: 1rpx dashed #e0e0e0;
+}
+
+.view-detail {
+  font-size: 24rpx;
+  color: #1890ff;
+  font-weight: 500;
+}
+
+/* 滚动条样式 */
+.modal-body::-webkit-scrollbar {
+  width: 6rpx;
+}
+
+.modal-body::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3rpx;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3rpx;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* 响应式设计 */
+@media (max-width: 375px) {
+  .modal-content {
+    width: 95%;
+  }
+  
+  .modal-header,
+  .modal-body {
+    padding: 20rpx;
+  }
+  
+  .modal-title {
+    font-size: 28rpx;
+  }
+  
+  .waybill-code {
+    font-size: 26rpx;
+  }
+  
+  .result-info {
+    margin-bottom: 10rpx;
+  }
+  
+  .info-label {
+    font-size: 22rpx;
+    width: 100rpx;
+  }
+  
+  .info-value {
+    font-size: 22rpx;
+    line-height: 32rpx;
+  }
 }

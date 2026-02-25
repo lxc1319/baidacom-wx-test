@@ -1,18 +1,13 @@
-/**
- * 查询结果弹窗组件
- * 用于展示运单查询结果，以表格形式显示关键信息
- */
+// waybill-result-modal.js
 Component({
   /**
    * 组件的属性列表
    */
   properties: {
-    // 是否显示弹窗
     visible: {
       type: Boolean,
       value: false
     },
-    // 运单数据列表
     results: {
       type: Array,
       value: []
@@ -30,41 +25,42 @@ Component({
    */
   methods: {
     /**
-     * 点击遮罩层
      * 关闭弹窗
      */
-    onMaskClick() {
-      this.triggerEvent('close')
+    onClose() {
+      this.triggerEvent('close');
     },
 
     /**
-     * 点击查看详情
-     * 跳转到运单身份验证页
+     * 查看运单详情
+     * @param {Object} e 事件对象
      */
     onViewDetail(e) {
-      const item = e.currentTarget.dataset.item
-
-      if (!item || !item.waybillCode) {
-        wx.showToast({
-          title: '运单信息不完整',
-          icon: 'none'
-        })
-        return
-      }
-
-      // 触发查看详情事件
+      const item = e.currentTarget.dataset.item;
       this.triggerEvent('viewdetail', {
         waybillCode: item.waybillCode,
         companyId: item.companyId
-      })
+      });
     },
 
     /**
-     * 点击取消按钮
-     * 关闭弹窗
+     * 格式化日期
+     * @param {string} dateStr 日期字符串
+     * @returns {string} 格式化后的日期
      */
-    onCancel() {
-      this.triggerEvent('close')
+    formatDate(dateStr) {
+      if (!dateStr) return '未知';
+      try {
+        const date = new Date(dateStr);
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        return `${year}-${month}-${day} ${hours}:${minutes}`;
+      } catch (error) {
+        return '未知时间';
+      }
     }
   }
-})
+});

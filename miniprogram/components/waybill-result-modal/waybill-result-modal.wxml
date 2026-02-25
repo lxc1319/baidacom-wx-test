@@ -1,28 +1,55 @@
-<!-- 查询结果弹窗组件 -->
-<view class="result-modal" wx:if="{{visible}}">
-  <!-- 遮罩层 -->
-  <view class="modal-mask" bindtap="onMaskClick"></view>
-
-  <!-- 弹窗内容 -->
+<!-- waybill-result-modal.wxml -->
+<view class="modal-container" wx:if="{{visible}}">
+  <view class="modal-mask" bindtap="onClose"></view>
   <view class="modal-content">
-    <!-- 表格 -->
-    <view class="result-table">
-      <!-- 表头 -->
-      <view class="table-header">
-        <text class="header-cell">收货人</text>
-        <text class="header-cell">收货地址</text>
-        <text class="header-cell">操作</text>
-      </view>
-
-      <!-- 数据行 - 支持列表 -->
-      <view class="table-row" wx:for="{{results}}" wx:key="id" data-item="{{item}}" bindtap="onViewDetail">
-        <text class="data-cell">{{item.collectName || ''}}</text>
-        <text class="data-cell address">{{item.collectAddress || ''}}</text>
-        <text class="data-cell link">查看详情</text>
+    <!-- 标题 -->
+    <view class="modal-header">
+      <text class="modal-title">查询结果</text>
+      <view class="modal-close" bindtap="onClose">
+        <text class="close-icon">×</text>
       </view>
     </view>
-
-    <!-- 取消按钮 -->
-    <view class="cancel-btn" bindtap="onCancel">取消</view>
+    
+    <!-- 结果列表 -->
+    <view class="modal-body">
+      <view wx:if="{{results.length === 0}}" class="empty-state">
+        <text class="empty-text">未查询到运单信息</text>
+      </view>
+      
+      <view wx:else class="result-list">
+        <view class="result-item" wx:for="{{results}}" wx:key="index" bindtap="onViewDetail" data-item="{{item}}">
+          <view class="result-item-header">
+            <text class="waybill-code">{{item.waybillCode}}</text>
+            <text class="company-name">{{item.companyName || '未知公司'}}</text>
+          </view>
+          
+          <view class="result-item-body">
+            <view class="result-info">
+              <text class="info-label">收货人：</text>
+              <text class="info-value">{{item.collectName || '未知'}}</text>
+            </view>
+            
+            <view class="result-info">
+              <text class="info-label">收货地址：</text>
+              <text class="info-value">{{item.collectAddress || '未知'}}</text>
+            </view>
+            
+            <view class="result-info">
+              <text class="info-label">物流状态：</text>
+              <text class="info-value">{{item.logisticsStatusDesc || '未知'}}</text>
+            </view>
+            
+            <view class="result-info">
+              <text class="info-label">创建时间：</text>
+              <text class="info-value">{{formatDate(item.waybillCreateTime)}}</text>
+            </view>
+          </view>
+          
+          <view class="result-item-footer">
+            <text class="view-detail">查看详情 →</text>
+          </view>
+        </view>
+      </view>
+    </view>
   </view>
 </view>

@@ -5,9 +5,11 @@ const authService = require('../../services/auth.js')
 
 Page({
   /**
-   * 页面的初始数�?   */
+   * 页面的初始数据
+   */
   data: {
-    // 当前标签页索引：0-电子存根�?-运输状�?    currentTab: 0,
+    // 当前标签页索引：0-电子存根 1-运输状态
+    currentTab: 0,
     
     // 运单号和公司ID
     waybillCode: '',
@@ -26,7 +28,8 @@ Page({
     sendPhoneMasked: '',
     collectPhoneMasked: '',
     
-    // 电话号码显示状�?    showSendPhone: false,
+    // 电话号码显示状态
+    showSendPhone: false,
     showCollectPhone: false,
     
     // 送货方式文本
@@ -47,7 +50,8 @@ Page({
   onLoad(options) {
     const { waybillCode, companyId, verified } = options
     
-    // 检查必要参�?    if (!waybillCode || !companyId) {
+    // 检查必要参数
+    if (!waybillCode || !companyId) {
       wx.showToast({
         title: '参数错误',
         icon: 'none',
@@ -59,7 +63,8 @@ Page({
       return
     }
     
-    // 检查验证标�?    if (verified !== 'true') {
+    // 检查验证标记
+    if (verified !== 'true') {
       // 未验证，跳转到验证页
       wx.redirectTo({
         url: `/pages/waybill-verify/waybill-verify?waybillCode=${waybillCode}&companyId=${companyId}`
@@ -118,10 +123,11 @@ Page({
       const receiptTypeText = this.getReceiptTypeText(result.receiptType)
       
       // 处理费用信息文本
-      const insuredText = result.insuredAmount > 0 ? '�? : '�?
-      const collectionText = result.collectionDelivery > 0 ? '�? : '�?
+      const insuredText = result.insuredAmount > 0 ? '是' : '否'
+      const collectionText = result.collectionDelivery > 0 ? '是' : '否'
 
-      // 格式化开单时间（使用运单创建时间�?      const createTimeFormatted = this.formatDateTime(result.waybillCreateTime || result.createTime)
+      // 格式化开单时间（使用运单创建时间代替）
+      const createTimeFormatted = this.formatDateTime(result.waybillCreateTime || result.createTime)
 
       this.setData({
         waybillInfo: result,
@@ -179,10 +185,12 @@ Page({
   },
 
   /**
-   * 标记查询历史（需登录�?   */
+   * 标记查询历史（需登录）
+   */
   async markRecentSearch() {
     try {
-      // 检查登录状�?      const isLoggedIn = authService.isLoggedIn()
+      // 检查登录状态
+      const isLoggedIn = authService.isLoggedIn()
       if (!isLoggedIn) {
         return
       }
@@ -194,7 +202,8 @@ Page({
       )
     } catch (error) {
       console.error('标记查询历史失败', error)
-      // 标记失败不影响页面显�?    }
+      // 标记失败不影响页面显示
+    }
   },
 
   /**
@@ -270,20 +279,27 @@ Page({
   },
 
   /**
-   * 手机号脱�?   * @param {string} phone - 手机�?   * @returns {string} 脱敏后的手机�?   */
+   * 手机号脱敏
+   * @param {string} phone - 手机号
+   * @returns {string} 脱敏后的手机号
+   */
   maskPhone(phone) {
     if (!phone) return ''
     // 如果已经是脱敏格式，直接返回
     if (phone.includes('****')) return phone
-    // 如果�?1位手机号，脱敏中�?�?    if (phone.length === 11) {
+    // 如果是11位手机号，脱敏中间4位
+    if (phone.length === 11) {
       return phone.substring(0, 3) + '****' + phone.substring(7)
     }
     return phone
   },
 
   /**
-   * 格式化日期时�?   * 将日期格式化�?YYYY/MM/DD HH:mm 格式
-   * @param {string} dateStr - 日期字符�?   * @returns {string} 格式化后的日�?   */
+   * 格式化日期时间
+   * 将日期格式化为 YYYY/MM/DD HH:mm 格式
+   * @param {string} dateStr - 日期字符串
+   * @returns {string} 格式化后的日期
+   */
   formatDateTime(dateStr) {
     if (!dateStr) return ''
 
@@ -300,8 +316,11 @@ Page({
   },
 
   /**
-   * 格式化物流轨迹时�?   * 将日期格式化�?YYYY-MM-DD HH:mm:ss 格式
-   * @param {string} dateStr - 日期字符�?   * @returns {string} 格式化后的日�?   */
+   * 格式化物流轨迹时间
+   * 将日期格式化为 YYYY-MM-DD HH:mm:ss 格式
+   * @param {string} dateStr - 日期字符串
+   * @returns {string} 格式化后的日期
+   */
   formatTrackTime(dateStr) {
     if (!dateStr) return ''
 
@@ -320,8 +339,10 @@ Page({
 
   /**
    * 格式化短日期
-   * 将日期格式化�?YYYY/MM/DD HH:mm 格式
-   * @param {string} dateStr - 日期字符�?   * @returns {string} 格式化后的日�?   */
+   * 将日期格式化为 YYYY/MM/DD HH:mm 格式
+   * @param {string} dateStr - 日期字符串
+   * @returns {string} 格式化后的日期
+   */
   formatShortDate(dateStr) {
     if (!dateStr) return ''
 

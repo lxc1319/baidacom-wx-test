@@ -14,7 +14,7 @@ class ApiService {
    */
 
   /**
-   * 全网查询运单
+   * 全网查询运单（参考 baidacom-wx-1 实现）
    * @param {string} waybillCode 运单号
    * @returns {Promise<Array>} 运单列表
    */
@@ -22,7 +22,7 @@ class ApiService {
     return await request.get('/com/waybill/search', {
       waybillCode
     }, {
-      needAuth: true // 查询运单需要登录
+      needAuth: false // 查询运单不需要登录
     })
   }
 
@@ -126,21 +126,6 @@ class ApiService {
   }
 
   /**
-   * 订阅/取消订阅运单（需登录）
-   * @param {string} waybillCode 运单号
-   * @param {number} companyId 公司ID
-   * @param {boolean} isSubscribe 是否订阅
-   * @returns {Promise<boolean>} 是否成功
-   */
-  async subscribeWaybill(waybillCode, companyId, isSubscribe) {
-    return await request.get('/com/waybill/subscribe', {
-      waybillCode,
-      companyId,
-      isSubscribe
-    })
-  }
-
-  /**
    * 同步运单最新信息
    * @param {string} waybillCode 运单号
    * @param {number} companyId 公司ID
@@ -152,6 +137,31 @@ class ApiService {
       companyId
     }, {
       needAuth: false // 同步信息不需要登录
+    })
+  }
+
+  /**
+   * 订阅/取消订阅运单（需登录）
+   * @param {string} waybillCode 运单号
+   * @param {number} companyId 公司ID
+   * @param {boolean} isSubscribe 是否订阅
+   * @returns {Promise<boolean>} 是否成功
+   */
+  async subscribe(waybillCode, companyId, isSubscribe) {
+    return await request.get('/com/waybill/subscribe', {
+      waybillCode,
+      companyId,
+      isSubscribe
+    })
+  }
+
+  /**
+   * 获取订阅模板ID列表
+   * @returns {Promise<Object>} 模板ID列表
+   */
+  async getNotifyTemplateIdList() {
+    return await request.get('/system/notify-message/getTemplateIdList', {}, {
+      needAuth: false
     })
   }
 
@@ -352,20 +362,7 @@ class ApiService {
    * ==================== 运单订阅相关 API ====================
    */
 
-  /**
-   * 订阅/取消订阅运单
-   * @param {string} waybillCode 运单号
-   * @param {number} companyId 物流公司ID
-   * @param {boolean} isSubscribe true-订阅 false-取消订阅
-   * @returns {Promise<boolean>} 是否成功
-   */
-  async subscribeWaybill(waybillCode, companyId, isSubscribe) {
-    return await request.get('/com/waybill/subscribe', {
-      waybillCode,
-      companyId,
-      isSubscribe
-    })
-  }
+
 
   /**
    * 获取订阅订单分页列表

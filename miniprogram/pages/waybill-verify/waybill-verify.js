@@ -1,29 +1,36 @@
 /**
- * 运单身份验证�? * 功能：验证用户身份后才能查看运单详情
+ * 运单身份验证页
+   * 功能：验证用户身份后才能查看运单详情
  */
 
 const api = require('../../services/api.js')
 
 Page({
   /**
-   * 页面的初始数�?   */
+   * 页面的初始数据
+   */
   data: {
-    waybillCode: '',      // 运单�?    companyId: 0,         // 物流公司ID
+    waybillCode: '',      // 运单号
+    companyId: 0,         // 物流公司ID
     logisticsCompaniesName: '', // 物流公司名称
     waybillInfo: null,    // 运单信息
-    code: '',             // 验证码输入�?    currentIndex: 0,      // 当前输入位置
+    code: '',             // 验证码输入值
+    currentIndex: 0,      // 当前输入位置
     autoFocus: true,      // 自动聚焦
     errorMessage: '',     // 错误提示信息
     errorCount: 0,        // 错误次数
-    maxErrorCount: 3,     // 最大错误次�?    isVerifying: false    // 是否正在验证�?  },
+    maxErrorCount: 3,     // 最大错误次数
+    isVerifying: false    // 是否正在验证中
+  },
 
   /**
    * 生命周期函数--监听页面加载
    * @param {Object} options 页面参数
-   * @param {string} options.waybillCode 运单�?   * @param {number} options.companyId 物流公司ID
+   * @param {string} options.waybillCode 运单号
+   * @param {number} options.companyId 物流公司ID
    */
   onLoad(options) {
-    console.log('运单身份验证页加载，参数�?, options)
+    console.log('运单身份验证页加载，参数：', options)
     
     // 获取页面参数
     const { waybillCode, companyId } = options
@@ -56,7 +63,7 @@ Page({
    */
   async loadWaybillInfo() {
     try {
-      wx.showLoading({ title: '加载�?..' })
+      wx.showLoading({ title: '加载中...' })
 
       // 调用API获取运单信息
       const waybillInfo = await api.getWaybillInfo(
@@ -64,7 +71,7 @@ Page({
         this.data.companyId
       )
 
-      console.log('运单信息加载成功�?, waybillInfo)
+      console.log('运单信息加载成功：', waybillInfo)
 
       // 保存运单信息
       this.setData({
@@ -74,7 +81,7 @@ Page({
 
       wx.hideLoading()
     } catch (error) {
-      console.error('加载运单信息失败�?, error)
+      console.error('加载运单信息失败：', error)
       wx.hideLoading()
       
       wx.showModal({
@@ -89,7 +96,8 @@ Page({
   },
 
   /**
-   * 验证码输入变化事�?   * @param {Object} event 事件对象
+   * 验证码输入变化事件
+   * @param {Object} event 事件对象
    * @param {string} event.detail.value 当前输入的验证码
    */
   onCodeChange(event) {
@@ -104,15 +112,16 @@ Page({
   },
 
   /**
-   * 验证码输入完成事件（输入�?位时自动触发�?   * @param {Object} event 事件对象
-   * @param {string} event.detail.value 输入�?位验证码
+   * 验证码输入完成事件（输入4位时自动触发）
+   * @param {Object} event 事件对象
+   * @param {string} event.detail.value 输入4位验证码
    */
   onCodeComplete(event) {
     const code = event.detail.value
     console.log('验证码输入完成：', code)
 
     // 防止重复验证
-    if (this.isVerifying) {
+    if (this.data.isVerifying) {
       console.log('正在验证中，忽略重复请求')
       return
     }
@@ -123,18 +132,21 @@ Page({
 
   /**
    * 验证手机号后四位
-   * @param {string} inputCode 用户输入�?位数�?   */
+   * @param {string} inputCode 用户输入4位数字
+   */
   async verifyCode(inputCode) {
-    // 设置验证中状�?    this.setData({ isVerifying: true })
+    // 设置验证中状态
+    this.setData({ isVerifying: true })
 
-    // 获取寄件人和收件人手机号后四�?    const waybillInfo = this.data.waybillInfo || {}
+    // 获取寄件人和收件人手机号后四位
+    const waybillInfo = this.data.waybillInfo || {}
     const { sendPhone, collectPhone } = waybillInfo
     
     // 获取手机号后四位（如果存在）
     const sendPhoneLast4 = sendPhone ? sendPhone.slice(-4) : ''
     const collectPhoneLast4 = collectPhone ? collectPhone.slice(-4) : ''
 
-    console.log('验证信息�?, {
+    console.log('验证信息：', {
       inputCode,
       sendPhoneLast4,
       collectPhoneLast4
@@ -145,7 +157,7 @@ Page({
 
     if (isValid) {
       // 验证成功
-      console.log('验证成功，跳转到详情�?)
+      console.log('验证成功，跳转到详情页')
       
       wx.showToast({
         title: '验证成功',
@@ -165,12 +177,14 @@ Page({
 
   /**
    * 处理验证失败
-   * 显示错误提示，增加错误次数，延迟清空输入�?   */
+   * 显示错误提示，增加错误次数，延迟清空输入
+   */
   handleVerifyFailed() {
     const newErrorCount = this.data.errorCount + 1
     console.log(`验证失败，第 ${newErrorCount} 次尝试`)
 
-    // 更新错误次数和错误提�?    this.setData({
+    // 更新错误次数和错误提示
+    this.setData({
       errorCount: newErrorCount,
       errorMessage: '验证失败，请重新输入',
       isVerifying: false
@@ -183,8 +197,10 @@ Page({
       duration: 2000
     })
 
-    // 检查是否达到最大错误次�?    if (newErrorCount >= this.data.maxErrorCount) {
-      // 达到最大次数，延迟后返回上一�?      setTimeout(() => {
+    // 检查是否达到最大错误次数
+    if (newErrorCount >= this.data.maxErrorCount) {
+      // 达到最大次数，延迟后返回上一页
+      setTimeout(() => {
         wx.showModal({
           title: '验证失败',
           content: '验证次数已达上限，请稍后再试',
@@ -195,7 +211,8 @@ Page({
         })
       }, 2000)
     } else {
-      // 未达到最大次数，延迟清空输入�?      setTimeout(() => {
+      // 未达到最大次数，延迟清空输入
+      setTimeout(() => {
         // 通过触发组件的清空方法来清空输入
         this.clearCodeInput()
       }, 2000)
@@ -215,7 +232,8 @@ Page({
   },
 
   /**
-   * 输入框输入事�?   * @param {Object} e 事件对象
+   * 输入框输入事件
+   * @param {Object} e 事件对象
    */
   onInput(e) {
     const value = e.detail.value
@@ -227,13 +245,15 @@ Page({
       errorMessage: ''
     })
 
-    // 输入�?位自动验�?    if (code.length === 4) {
+    // 输入4位自动验证
+    if (code.length === 4) {
       this.verifyCode(code)
     }
   },
 
   /**
-   * 输入框聚焦事�?   */
+   * 输入框聚焦事件
+   */
   onFocus() {
     this.setData({
       autoFocus: true
@@ -241,7 +261,8 @@ Page({
   },
 
   /**
-   * 输入框失焦事�?   */
+   * 输入框失焦事件
+   */
   onBlur() {
     this.setData({
       autoFocus: false
@@ -249,13 +270,14 @@ Page({
   },
 
   /**
-   * 复制运单�?   */
+   * 复制运单号
+   */
   onCopyCode() {
     wx.setClipboardData({
       data: this.data.waybillCode,
       success: () => {
         wx.showToast({
-          title: '已复�?,
+          title: '已复制',
           icon: 'success'
         })
       }
@@ -276,27 +298,27 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady() {
-    console.log('运单身份验证页渲染完�?)
+    console.log('运单身份验证页渲染完成')
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    console.log('运单身份验证页显�?)
+    console.log('运单身份验证页显示')
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide() {
-    console.log('运单身份验证页隐�?)
+    console.log('运单身份验证页隐藏')
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload() {
-    console.log('运单身份验证页卸�?)
+    console.log('运单身份验证页卸载')
   }
 })

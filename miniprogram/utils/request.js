@@ -128,9 +128,13 @@ class Request {
     }
 
     // 添加租户ID - 后端期望的请求头名称为 "tenant-id"
-    const tenantId = tenantConfig.getTenantId()
-    if (tenantId) {
-      requestHeader['tenant-id'] = tenantId
+    // 如果header中没有指定tenant-id，则使用默认值
+    if (!requestHeader['tenant-id']) {
+      const tenantId = tenantConfig.getTenantId()
+      console.log('[Request] tenant-id:', tenantId)
+      if (tenantId) {
+        requestHeader['tenant-id'] = tenantId
+      }
     }
 
     // 构建完整 URL
@@ -171,8 +175,7 @@ class Request {
    */
   doRequest(config, retryCount) {
     // 打印请求日志
-    const fullUrl = config.url + (config.data && Object.keys(config.data).length > 0 ? '?' + Object.keys(config.data).map(k => `${k}=${encodeURIComponent(config.data[k])}`).join('&') : '')
-    console.log(`[请求] ${config.method} ${fullUrl}`)
+    console.log(`[请求] ${config.method} ${config.url}`)
     console.log(`[请求参数]`, config.data)
     
     return new Promise((resolve, reject) => {
@@ -281,17 +284,20 @@ class Request {
    */
   handleSuccess(data, needAuth = true, config = {}) {
     // 根据后端返回的数据结构处理
-    // 假设后端返回格式：{ code: 0, data: {}, message: '' }
+    // 假设后端返回格式：{ code: 0, data: {}, message: '' } 或 { code: 0, data: {}, msg: '' }
     if (data.code === 0 || data.code === 200) {
       return data.data
     } else {
+      // 统一使用 msg 或 message 字段
+      const errorMsg = data.msg || data.message || '请求失败'
+      
       // 对于不需要认证的请求，错误静默处理（不显示提示），让调用方自己处理
       if (!needAuth) {
-        throw this.createError(data.message || data.msg || '请求失败', data.code)
+        throw this.createError(errorMsg, data.code)
       }
 
       // 业务错误处理
-      const errorMessage = this.getBusinessErrorMessage(data.code, data.message, needAuth)
+      const errorMessage = this.getBusinessErrorMessage(data.code, errorMsg, needAuth)
 
       // 显示业务错误提示
       wx.showToast({

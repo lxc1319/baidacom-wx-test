@@ -36,13 +36,12 @@
             <text class="icon-clear">×</text>
           </view>
         </view>
-        <!-- 查询按钮 -->
-        <view wx:if="{{isLoggedIn}}" class="search-btn" bindtap="onSearch">查询</view>
-        <view wx:else class="search-btn" bindtap="onSearchWithLogin">查询</view>
+        <!-- 查询按钮（参考 baidacom-wx-1 实现，不需要登录） -->
+        <view class="search-btn" bindtap="onSearchWithLogin">查询</view>
       </view>
     </view>
 
-    <!-- 3. 标签页切换 -->
+    <!-- 3. 标签页切换（参考 baidacom-wx-1 实现） -->
     <view class="tabs-section">
       <view class="tabs">
         <view
@@ -180,6 +179,12 @@
        <view class="login-modal-title">{{showPhoneAuth ? '手机号授权' : '登录确认'}}</view>
        <view class="login-modal-desc">{{showPhoneAuth ? '需要授权手机号完成注册' : '查询运单需要登录'}}</view>
 
+       <!-- 手机号显示区域 -->
+       <view wx:if="{{!showPhoneAuth && userPhone}}" class="login-modal-phone">
+         <text class="login-modal-phone-label">手机号：</text>
+         <text class="login-modal-phone-number">{{userPhone}}</text>
+       </view>
+
        <view class="login-modal-buttons">
          <button class="login-modal-btn cancel" bindtap="onCloseLoginModal">取消</button>
          
@@ -188,7 +193,7 @@
            wx:if="{{!showPhoneAuth}}"
            class="login-modal-btn confirm" 
            bindtap="onConfirmLogin"
-         >一键登录</button>
+         >{{userPhone ? '确认登录' : '一键登录'}}</button>
          
          <!-- 需要手机号时显示获取手机号按钮 -->
          <button 
